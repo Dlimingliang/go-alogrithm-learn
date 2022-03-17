@@ -5,9 +5,31 @@ import (
 )
 
 func main() {
-	nums := []int{1, 0, 1, 1, 1, 1}
-	result := findMaxConsecutiveOnes(nums)
+	nums := []int{555, 901, 4827, 1771}
+	//result := findMaxConsecutiveOnes(nums)
+	result := findNumbers(nums)
 	fmt.Println(result)
+}
+
+func findNumbers(nums []int) int {
+	var result int
+	//for _, num := range nums {
+	//	s := strconv.Itoa(num)
+	//	if len(s) % 2 == 0 {
+	//		result ++
+	//	}
+	//}
+	for _, num := range nums {
+		var size int
+		for num > 0 {
+			size++
+			num = num / 10
+		}
+		if size%2 == 0 {
+			result++
+		}
+	}
+	return result
 }
 
 func findMaxConsecutiveOnes(nums []int) int {
