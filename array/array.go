@@ -1,14 +1,30 @@
 package main
 
-import (
-	"fmt"
-)
-
 func main() {
-	nums := []int{555, 901, 4827, 1771}
+	nums := []int{-7, -3, 2, 3, 11}
 	//result := findMaxConsecutiveOnes(nums)
-	result := findNumbers(nums)
-	fmt.Println(result)
+	//result := findNumbers(nums)
+	//fmt.Println(result)
+	sortedSquares(nums)
+}
+
+func sortedSquares(nums []int) []int {
+	//-4,-1,0,3,10
+	//时间复杂度O(n)
+	//空间复杂度O(1)
+	n := len(nums)
+	ans := make([]int, n)
+	i, j := 0, n-1
+	for pos := n - 1; pos >= 0; pos-- {
+		if v, w := nums[i]*nums[i], nums[j]*nums[j]; v > w {
+			ans[pos] = v
+			i++
+		} else {
+			ans[pos] = w
+			j--
+		}
+	}
+	return ans
 }
 
 func findNumbers(nums []int) int {
