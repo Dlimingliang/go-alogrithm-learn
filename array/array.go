@@ -1,11 +1,40 @@
 package main
 
+import "fmt"
+
 func main() {
-	nums := []int{-7, -3, 2, 3, 11}
+	nums := []int{1, 0, 2, 3, 0, 4, 5, 0}
+	fmt.Println(len(nums))
 	//result := findMaxConsecutiveOnes(nums)
 	//result := findNumbers(nums)
 	//fmt.Println(result)
-	sortedSquares(nums)
+	//sortedSquares(nums)
+	duplicateZeros(nums)
+}
+
+func duplicateZeros(arr []int) {
+	//1,0,2,3,0,4,5,0
+	//1,0,0,2,3,0,0,4
+	length := len(arr)
+	var moveNum int
+	var lastIndex int
+	for i := 0; i < length-moveNum; i++ {
+		if arr[i] == 0 && i+moveNum+1 < length {
+			moveNum++
+			lastIndex = i
+		}
+	}
+
+	for i := length - moveNum - 1; i >= 0; i-- {
+		if arr[i] == 0 && i <= lastIndex && moveNum > 0 {
+			arr[i+moveNum] = arr[i]
+			arr[i+moveNum-1] = arr[i]
+			moveNum -= 1
+		} else {
+			arr[i+moveNum] = arr[i]
+		}
+	}
+	fmt.Println(arr)
 }
 
 func sortedSquares(nums []int) []int {
