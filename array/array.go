@@ -3,14 +3,27 @@ package main
 import "fmt"
 
 func main() {
-	nums := []int{1, 0, 2, 3, 0, 4, 5, 0}
-	fmt.Println(len(nums))
+	//nums := []int{1, 0, 2, 3, 0, 4, 5, 0}
 	//result := findMaxConsecutiveOnes(nums)
 	//result := findNumbers(nums)
-	//fmt.Println(result)
 	//sortedSquares(nums)
 	//duplicateZeros(nums)
-	merge([]int{4, 5, 6, 0, 0, 0}, 3, []int{1, 2, 3}, 3)
+	//merge([]int{4, 5, 6, 0, 0, 0}, 3, []int{1, 2, 3}, 3)
+	fmt.Println(removeElement([]int{0, 1, 2, 2, 3, 0, 4, 2}, 2))
+}
+
+func removeElement(nums []int, val int) int {
+	//3,2,2,3  val=3
+	index, last := 0, len(nums)
+	for index < last {
+		if nums[index] == val {
+			nums[index] = nums[last-1]
+			last--
+		} else {
+			index++
+		}
+	}
+	return last
 }
 
 func merge(nums1 []int, m int, nums2 []int, n int) {
