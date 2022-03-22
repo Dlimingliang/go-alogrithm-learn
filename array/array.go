@@ -9,7 +9,24 @@ func main() {
 	//sortedSquares(nums)
 	//duplicateZeros(nums)
 	//merge([]int{4, 5, 6, 0, 0, 0}, 3, []int{1, 2, 3}, 3)
-	fmt.Println(removeElement([]int{0, 1, 2, 2, 3, 0, 4, 2}, 2))
+	//fmt.Println(removeElement([]int{0, 1, 2, 2, 3, 0, 4, 2}, 2))
+	fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
+}
+
+func removeDuplicates(nums []int) int {
+	//0,0,1,1,1,2,2,3,3,4  0,1,2,3,4
+	n := len(nums)
+	if n == 0 {
+		return 0
+	}
+	slow := 1
+	for fast := 1; fast < n; fast++ {
+		if nums[fast] != nums[fast-1] {
+			nums[slow] = nums[fast]
+			slow++
+		}
+	}
+	return slow
 }
 
 func removeElement(nums []int, val int) int {
