@@ -11,7 +11,51 @@ func main() {
 	//merge([]int{4, 5, 6, 0, 0, 0}, 3, []int{1, 2, 3}, 3)
 	//fmt.Println(removeElement([]int{0, 1, 2, 2, 3, 0, 4, 2}, 2))
 	//fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
-	fmt.Println(checkIfExist([]int{10, 2, 5, 3}))
+	//fmt.Println(checkIfExist([]int{10, 2, 5, 3}))
+	fmt.Println(validMountainArray([]int{0, 3, 2, 1}))
+}
+
+func validMountainArray(arr []int) bool {
+	//0,3,2,1 true
+	//length := len(arr)
+	//if length  < 3 {
+	//	return false
+	//}
+	//
+	//var max, index int
+	//for i := 0; i < length; i++ {
+	//	if arr[i] > max {
+	//		max = arr[i]
+	//		index = i
+	//	}
+	//}
+	//if index == length - 1 || index == 0 {
+	//	return false
+	//}
+	//
+	//for i := 1; i <= index; i++ {
+	//	if arr[i] <= arr[i-1] {
+	//		return false
+	//	}
+	//}
+	//for i := index + 1; i < length; i++ {
+	//	if arr[i] >= arr[i-1] {
+	//		return false
+	//	}
+	//}
+
+	//一次扫描，比上边的快
+	i, n := 0, len(arr)
+	//递增扫描
+	for ; i+1 < n && arr[i] < arr[i+1]; i++ {
+	}
+	if i == 0 || i == n-1 {
+		return false
+	}
+	//递减扫描
+	for ; i+1 < n && arr[i] > arr[i+1]; i++ {
+	}
+	return i == n-1
 }
 
 func checkIfExist(arr []int) bool {
