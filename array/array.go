@@ -26,15 +26,27 @@ func checkIfExist(arr []int) bool {
 	//return false
 
 	//先求出每一个的二倍值，然后再进行比较 时间复杂度O(n) 空间复杂度O(n)
+	//arrMap := make(map[int]int)
+	//for i := 0; i < len(arr); i++ {
+	//	arrMap[arr[i]*2] = i
+	//}
+	//
+	//for i := 0; i < len(arr); i++ {
+	//	if value, ok := arrMap[arr[i]]; ok && value != i {
+	//		return true
+	//	}
+	//}
 	arrMap := make(map[int]int)
 	for i := 0; i < len(arr); i++ {
-		arrMap[arr[i]*2] = i
-	}
-
-	for i := 0; i < len(arr); i++ {
-		if value, ok := arrMap[arr[i]]; ok && value != i {
+		if value, ok := arrMap[arr[i]*2]; ok && value != i {
 			return true
 		}
+		if arr[i]%2 == 0 {
+			if value, ok := arrMap[arr[i]/2]; ok && value != i {
+				return true
+			}
+		}
+		arrMap[arr[i]] = i
 	}
 	return false
 }
