@@ -10,7 +10,33 @@ func main() {
 	//duplicateZeros(nums)
 	//merge([]int{4, 5, 6, 0, 0, 0}, 3, []int{1, 2, 3}, 3)
 	//fmt.Println(removeElement([]int{0, 1, 2, 2, 3, 0, 4, 2}, 2))
-	fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
+	//fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
+	fmt.Println(checkIfExist([]int{10, 2, 5, 3}))
+}
+
+func checkIfExist(arr []int) bool {
+	//暴力求解 时间复杂度O(n^2) 空间复杂度O(1)
+	//for i := 0; i < len(arr); i++ {
+	//	for j := 0; j < len(arr); j++ {
+	//		if i != j && arr[i] == 2 * arr[j] {
+	//			return true
+	//		}
+	//	}
+	//}
+	//return false
+
+	//先求出每一个的二倍值，然后再进行比较 时间复杂度O(n) 空间复杂度O(n)
+	arrMap := make(map[int]int)
+	for i := 0; i < len(arr); i++ {
+		arrMap[arr[i]*2] = i
+	}
+
+	for i := 0; i < len(arr); i++ {
+		if value, ok := arrMap[arr[i]]; ok && value != i {
+			return true
+		}
+	}
+	return false
 }
 
 func removeDuplicates(nums []int) int {
