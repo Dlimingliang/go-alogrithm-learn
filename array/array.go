@@ -13,7 +13,21 @@ func main() {
 	//fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
 	//fmt.Println(checkIfExist([]int{10, 2, 5, 3}))
 	//fmt.Println(validMountainArray([]int{0, 3, 2, 1}))
-	fmt.Println(replaceElements([]int{400}))
+	//fmt.Println(replaceElements([]int{400}))
+	moveZeroes([]int{0, 1, 0, 3, 12})
+}
+
+func moveZeroes(nums []int) {
+	//0,1,0,3,12
+	//1,3,12,0,0
+	slow, length := 0, len(nums)
+	for i := 0; i < length; i++ {
+		if nums[i] != 0 {
+			nums[slow], nums[i] = nums[i], nums[slow]
+			slow++
+		}
+	}
+	fmt.Println(nums)
 }
 
 func replaceElements(arr []int) []int {
