@@ -19,9 +19,10 @@ func main() {
 func replaceElements(arr []int) []int {
 	//17,18,5,4,6,1
 	//18,6,6,6,1,-1
+	var current int
 	max, length := -1, len(arr)
 	for i := length - 1; i >= 0; i-- {
-		current := arr[i]
+		current = arr[i]
 		arr[i] = max
 		if current > max {
 			max = current
