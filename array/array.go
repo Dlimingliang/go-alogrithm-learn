@@ -12,7 +12,22 @@ func main() {
 	//fmt.Println(removeElement([]int{0, 1, 2, 2, 3, 0, 4, 2}, 2))
 	//fmt.Println(removeDuplicates([]int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}))
 	//fmt.Println(checkIfExist([]int{10, 2, 5, 3}))
-	fmt.Println(validMountainArray([]int{0, 3, 2, 1}))
+	//fmt.Println(validMountainArray([]int{0, 3, 2, 1}))
+	fmt.Println(replaceElements([]int{400}))
+}
+
+func replaceElements(arr []int) []int {
+	//17,18,5,4,6,1
+	//18,6,6,6,1,-1
+	max, length := -1, len(arr)
+	for i := length - 1; i >= 0; i-- {
+		current := arr[i]
+		arr[i] = max
+		if current > max {
+			max = current
+		}
+	}
+	return arr
 }
 
 func validMountainArray(arr []int) bool {
