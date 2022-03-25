@@ -14,7 +14,23 @@ func main() {
 	//fmt.Println(checkIfExist([]int{10, 2, 5, 3}))
 	//fmt.Println(validMountainArray([]int{0, 3, 2, 1}))
 	//fmt.Println(replaceElements([]int{400}))
-	moveZeroes([]int{0, 1, 0, 3, 12})
+	//moveZeroes([]int{0, 1, 0, 3, 12})
+	fmt.Println(sortArrayByParity([]int{1, 0, 3}))
+}
+
+func sortArrayByParity(nums []int) []int {
+	length := len(nums)
+	for i := 0; i < length; {
+		if nums[i]%2 != 0 {
+			if nums[length-1]%2 == 0 {
+				nums[length-1], nums[i] = nums[i], nums[length-1]
+			}
+			length--
+		} else {
+			i++
+		}
+	}
+	return nums
 }
 
 func moveZeroes(nums []int) {
