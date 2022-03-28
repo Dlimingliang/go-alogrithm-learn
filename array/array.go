@@ -26,15 +26,49 @@ func main() {
 func findDisappearedNumbers(nums []int) []int {
 	//4,3,2,7,8,2,3,1
 	//5,6
-	arr := make([]int, len(nums)+1)
-	for i := 0; i < len(nums); i++ {
-		arr[nums[i]]++
-	}
+	//使用了额外空间，不满足题意
+	//arr := make([]int, len(nums)+1)
+	//for i := 0; i < len(nums); i++ {
+	//	arr[nums[i]]++
+	//}
+	//
+	//result := make([]int, 0)
+	//for i := 1; i < len(arr); i++ {
+	//	if arr[i] == 0 {
+	//		result = append(result, i)
+	//	}
+	//}
+	//return result
 
+	//变成0，但是这种要判断
+	//result := make([]int, 0)
+	////遍历，将存在的值变成空
+	//for i := 0; i < len(nums); i++ {
+	//	value := nums[i]
+	//	for value != 0 {
+	//		cur := nums[value - 1]
+	//		nums[value - 1] = 0
+	//		value = cur
+	//	}
+	//}
+	////遍历，寻找不为0的地方
+	//for i := 0; i < len(nums); i++ {
+	//	if nums[i] != 0 {
+	//		result = append(result, i + 1)
+	//	}
+	//}
+	//return result
+
+	//不判断是不是0，+n，这种更优
+	n := len(nums)
 	result := make([]int, 0)
-	for i := 1; i < len(arr); i++ {
-		if arr[i] == 0 {
-			result = append(result, i)
+	for _, v := range nums {
+		v = (v - 1) % n
+		nums[v] += n
+	}
+	for i, v := range nums {
+		if v <= n {
+			result = append(result, i+1)
 		}
 	}
 	return result
