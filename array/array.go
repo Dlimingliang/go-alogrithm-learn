@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
 	//nums := []int{1, 0, 2, 3, 0, 4, 5, 0}
@@ -15,7 +18,26 @@ func main() {
 	//fmt.Println(validMountainArray([]int{0, 3, 2, 1}))
 	//fmt.Println(replaceElements([]int{400}))
 	//moveZeroes([]int{0, 1, 0, 3, 12})
-	fmt.Println(sortArrayByParity([]int{1, 0, 3}))
+	//fmt.Println(sortArrayByParity([]int{1, 0, 3}))
+	fmt.Println(heightChecker([]int{5, 1, 2, 3, 4}))
+}
+
+func heightChecker(heights []int) int {
+	//heights 5,1,2,3,4
+	//excepted 1,2,3,4,5
+	//result 5
+	//时间复杂度 排序的时间复杂度为O(nlogn) 遍历的时间复杂度为O(n) 所以总的时间复杂度为O(nlogn)
+	//空间复杂度 O(1)
+	excepted := make([]int, len(heights))
+	copy(excepted, heights)
+	sort.Ints(excepted)
+	result := 0
+	for i := 0; i < len(heights); i++ {
+		if excepted[i] != heights[i] {
+			result++
+		}
+	}
+	return result
 }
 
 func sortArrayByParity(nums []int) []int {
