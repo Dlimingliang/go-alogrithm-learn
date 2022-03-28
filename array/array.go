@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 func main() {
@@ -28,13 +27,33 @@ func heightChecker(heights []int) int {
 	//result 5
 	//时间复杂度 排序的时间复杂度为O(nlogn) 遍历的时间复杂度为O(n) 所以总的时间复杂度为O(nlogn)
 	//空间复杂度 O(1)
-	excepted := make([]int, len(heights))
-	copy(excepted, heights)
-	sort.Ints(excepted)
+	//excepted := make([]int, len(heights))
+	//copy(excepted, heights)
+	//sort.Ints(excepted)
+	//result := 0
+	//for i := 0; i < len(heights); i++ {
+	//	if excepted[i] != heights[i] {
+	//		result++
+	//	}
+	//}
+	//return result
+
+	//计数法
+	arr := new([101]int)
+	for _, height := range heights {
+		arr[height]++
+	}
+
 	result := 0
-	for i := 0; i < len(heights); i++ {
-		if excepted[i] != heights[i] {
-			result++
+	var value int
+	for i, j := 1, 0; i < len(arr); i++ {
+		value = arr[i]
+		for value > 0 {
+			if heights[j] != i {
+				result++
+			}
+			j++
+			value--
 		}
 	}
 	return result
