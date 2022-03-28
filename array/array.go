@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func main() {
@@ -19,6 +20,26 @@ func main() {
 	//moveZeroes([]int{0, 1, 0, 3, 12})
 	//fmt.Println(sortArrayByParity([]int{1, 0, 3}))
 	fmt.Println(heightChecker([]int{5, 1, 2, 3, 4}))
+}
+
+func thirdMax(nums []int) int {
+	//如果第三大的数不存在，则返回最大数
+	//2, 2, 3, 1
+	//1
+	a, b, c := math.MinInt64, math.MinInt64, math.MinInt64
+	for i := 0; i < len(nums); i++ {
+		if nums[i] > a {
+			a, b, c = nums[i], a, b
+		} else if a > nums[i] && nums[i] > b {
+			b, c = nums[i], b
+		} else if b > nums[i] && nums[i] > c {
+			c = nums[i]
+		}
+	}
+	if c == math.MinInt64 {
+		return a
+	}
+	return c
 }
 
 func heightChecker(heights []int) int {
