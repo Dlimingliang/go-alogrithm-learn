@@ -19,7 +19,25 @@ func main() {
 	//fmt.Println(replaceElements([]int{400}))
 	//moveZeroes([]int{0, 1, 0, 3, 12})
 	//fmt.Println(sortArrayByParity([]int{1, 0, 3}))
-	fmt.Println(heightChecker([]int{5, 1, 2, 3, 4}))
+	//fmt.Println(heightChecker([]int{5, 1, 2, 3, 4}))
+	fmt.Println(findDisappearedNumbers([]int{4, 3, 2, 7, 8, 2, 3, 1}))
+}
+
+func findDisappearedNumbers(nums []int) []int {
+	//4,3,2,7,8,2,3,1
+	//5,6
+	arr := make([]int, len(nums)+1)
+	for i := 0; i < len(nums); i++ {
+		arr[nums[i]]++
+	}
+
+	result := make([]int, 0)
+	for i := 1; i < len(arr); i++ {
+		if arr[i] == 0 {
+			result = append(result, i)
+		}
+	}
+	return result
 }
 
 func thirdMax(nums []int) int {
