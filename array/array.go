@@ -27,6 +27,7 @@ func main() {
 
 func dominantIndex(nums []int) int {
 	//3,6,1,0
+	//时间复杂度O(n) 空间复杂度O(1)
 	n := len(nums)
 	if n <= 1 {
 		return 0
