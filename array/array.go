@@ -20,7 +20,58 @@ func main() {
 	//moveZeroes([]int{0, 1, 0, 3, 12})
 	//fmt.Println(sortArrayByParity([]int{1, 0, 3}))
 	//fmt.Println(heightChecker([]int{5, 1, 2, 3, 4}))
-	fmt.Println(findDisappearedNumbers([]int{4, 3, 2, 7, 8, 2, 3, 1}))
+	//fmt.Println(findDisappearedNumbers([]int{4, 3, 2, 7, 8, 2, 3, 1}))
+	fmt.Println(pivotIndex([]int{2}))
+}
+
+func pivotIndex(nums []int) int {
+
+	//1, 7, 3, 6, 5, 6  答案:3
+	////双循环 时间复杂度O(n^2) 空间复杂度O(1)
+	//n, leftSum, rightSum := len(nums), 0, 0
+	//for i := 0; i < n; i++ {
+	//	rightSum = 0
+	//	for j := i + 1; j < n; j++ {
+	//		rightSum += nums[j]
+	//	}
+	//	if leftSum == rightSum {
+	//		return i
+	//	}
+	//	leftSum += nums[i]
+	//}
+	//return -1
+
+	////俩次循环 时间复杂度O(n) 空间复杂度O(n)
+	//n, sum := len(nums), 0
+	//arr := make([]int, n)
+	//for i := n - 1; i >= 0; i-- {
+	//	arr[i] = sum
+	//	sum += nums[i]
+	//}
+	//
+	//sum = 0
+	//for i := 0; i < n; i++ {
+	//	if sum == arr[i] {
+	//		return i
+	//	}
+	//	sum+=nums[i]
+	//}
+	//return -1
+
+	//更优 时间复杂度O(n) 空间复杂度O(1)
+	total := 0
+	for _, v := range nums {
+		total += v
+	}
+
+	sum := 0
+	for i, v := range nums {
+		if 2*sum+v == total {
+			return i
+		}
+		sum += v
+	}
+	return -1
 }
 
 func findDisappearedNumbers(nums []int) []int {
