@@ -21,7 +21,29 @@ func main() {
 	//fmt.Println(sortArrayByParity([]int{1, 0, 3}))
 	//fmt.Println(heightChecker([]int{5, 1, 2, 3, 4}))
 	//fmt.Println(findDisappearedNumbers([]int{4, 3, 2, 7, 8, 2, 3, 1}))
-	fmt.Println(pivotIndex([]int{2}))
+	//fmt.Println(pivotIndex([]int{2}))
+	fmt.Println(dominantIndex([]int{3, 6, 1, 0}))
+}
+
+func dominantIndex(nums []int) int {
+	//3,6,1,0
+	n := len(nums)
+	if n <= 1 {
+		return 0
+	}
+
+	max, second, index := -1, -1, -1
+	for i, v := range nums {
+		if v > max {
+			max, second, index = v, max, i
+		} else if v < max && v > second {
+			second = v
+		}
+	}
+	if max >= 2*second {
+		return index
+	}
+	return -1
 }
 
 func pivotIndex(nums []int) int {
