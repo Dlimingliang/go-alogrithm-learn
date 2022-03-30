@@ -22,7 +22,29 @@ func main() {
 	//fmt.Println(heightChecker([]int{5, 1, 2, 3, 4}))
 	//fmt.Println(findDisappearedNumbers([]int{4, 3, 2, 7, 8, 2, 3, 1}))
 	//fmt.Println(pivotIndex([]int{2}))
-	fmt.Println(dominantIndex([]int{3, 6, 1, 0}))
+	//fmt.Println(dominantIndex([]int{3, 6, 1, 0}))
+	fmt.Println(plusOne([]int{9, 9}))
+}
+
+func plusOne(digits []int) []int {
+	//1,2,3 124
+	//9 10
+	n := len(digits)
+	for i := n - 1; i >= 0; i-- {
+		if digits[i] == 9 {
+			if i == 0 {
+				arr := make([]int, n+1)
+				arr[0] = 1
+				return arr
+			}
+			digits[i] = 0
+			continue
+		} else {
+			digits[i] = digits[i] + 1
+			break
+		}
+	}
+	return digits
 }
 
 func dominantIndex(nums []int) int {
