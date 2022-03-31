@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
 )
 
 func main() {
@@ -24,7 +25,28 @@ func main() {
 	//fmt.Println(pivotIndex([]int{2}))
 	//fmt.Println(dominantIndex([]int{3, 6, 1, 0}))
 	//fmt.Println(plusOne([]int{9, 9}))
-	fmt.Println(searchInsert([]int{1, 3, 5, 6}, 2))
+	//fmt.Println(searchInsert([]int{1, 3, 5, 6}, 2))
+	fmt.Println(mergeArray([][]int{[]int{1, 4}, []int{0, 4}}))
+}
+
+func mergeArray(intervals [][]int) [][]int {
+	//排序
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
+	n := len(intervals)
+	res := make([][]int, 0)
+	//遍历寻找
+	for i := 0; i < n; i++ {
+		if len(res) == 0 || res[len(res)-1][1] < intervals[i][0] {
+			res = append(res, intervals[i])
+		} else {
+			if intervals[i][1] > res[len(res)-1][1] {
+				res[len(res)-1][1] = intervals[i][1]
+			}
+		}
+	}
+	return res
 }
 
 func searchInsert(nums []int, target int) int {
