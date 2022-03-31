@@ -23,7 +23,25 @@ func main() {
 	//fmt.Println(findDisappearedNumbers([]int{4, 3, 2, 7, 8, 2, 3, 1}))
 	//fmt.Println(pivotIndex([]int{2}))
 	//fmt.Println(dominantIndex([]int{3, 6, 1, 0}))
-	fmt.Println(plusOne([]int{9, 9}))
+	//fmt.Println(plusOne([]int{9, 9}))
+	fmt.Println(searchInsert([]int{1, 3, 5, 6}, 2))
+}
+
+func searchInsert(nums []int, target int) int {
+	//1,3,5,6 5 结果 2
+	//1,3,5,6 2 结果 1
+	n := len(nums)
+	left, right, ans := 0, n-1, n
+	for left <= right {
+		mid := ((right - left) / 2) + left
+		if target <= nums[mid] {
+			ans = mid
+			right = mid - 1
+		} else {
+			left = mid + 1
+		}
+	}
+	return ans
 }
 
 func plusOne(digits []int) []int {
