@@ -31,25 +31,43 @@ func main() {
 }
 
 func rotate(matrix [][]int) {
-	m, n := len(matrix[0])-1, len(matrix)-1
-	mStart, nStart, temp := 0, 0, 0
-	for mStart < m {
-		value := matrix[nStart][mStart+temp]
-		matrix[nStart][mStart+temp] = matrix[n-temp][mStart]
-		matrix[n-temp][mStart] = matrix[n][m-temp]
-		matrix[n][m-temp] = matrix[nStart+temp][n]
-		matrix[nStart+temp][n] = value
-		//移动完毕
-		temp++
-		if temp == m-mStart {
-			mStart++
-			nStart++
-			m--
-			n--
-			temp = 0
+	//该方法为瞎蒙的，不成章法
+	////旋转矩阵 时间复杂度O(n^2) 空间复杂度O(1)
+	//m, n := len(matrix[0])-1, len(matrix)-1
+	//mStart, nStart, temp := 0, 0, 0
+	//for mStart < m {
+	//	value := matrix[nStart][mStart+temp]
+	//	matrix[nStart][mStart+temp] = matrix[n-temp][mStart]
+	//	matrix[n-temp][mStart] = matrix[n][m-temp]
+	//	matrix[n][m-temp] = matrix[nStart+temp][n]
+	//	matrix[nStart+temp][n] = value
+	//	//移动完毕
+	//	temp++
+	//	if temp == m-mStart {
+	//		mStart++
+	//		nStart++
+	//		m--
+	//		n--
+	//		temp = 0
+	//	}
+	//}
+	//fmt.Println(matrix)
+
+	//保留temp值，按照公式移动
+	//matrix[row][col]  => matrix[col][n - row - 1]
+	//matrix[col][n - row - 1] => matrix[n - row - 1][n - col - 1]
+	//matrix[n - row - 1][n - col - 1] => matrix[n - col - 1][row]
+	//matrix[n - col - 1][row] => matrix[row][col]
+	n := len(matrix)
+	for i := 0; i < n/2; i++ {
+		for j := 0; j < (n+1)/2; j++ {
+			temp := matrix[i][j]
+			matrix[i][j] = matrix[n-j-1][i]
+			matrix[n-j-1][i] = matrix[n-i-1][n-j-1]
+			matrix[n-i-1][n-j-1] = matrix[j][n-i-1]
+			matrix[j][n-i-1] = temp
 		}
 	}
-	fmt.Println(matrix)
 }
 
 func mergeArray(intervals [][]int) [][]int {
