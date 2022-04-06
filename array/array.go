@@ -27,7 +27,42 @@ func main() {
 	//fmt.Println(plusOne([]int{9, 9}))
 	//fmt.Println(searchInsert([]int{1, 3, 5, 6}, 2))
 	//fmt.Println(mergeArray([][]int{[]int{1, 2}, []int{7, 8}}))
-	rotate([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}})
+	//rotate([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}}
+	spiralOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}})
+}
+
+func spiralOrder(matrix [][]int) []int {
+	// 1 2 3
+	// 4 5 6
+	// 7 8 9
+	// 10 11 12
+	// 1 2 3 6 9 12 11 10 7 4 5 8
+	result := make([]int, 0)
+	m, n := len(matrix[0]), len(matrix)
+	mStart, nStart := 0, 0
+	for mStart < m && nStart < n {
+		//正向横向
+		for i := mStart; i < m; i++ {
+			result = append(result, matrix[nStart][i])
+		}
+		//正向竖向
+		for i := nStart + 1; i < n-1; i++ {
+			result = append(result, matrix[i][m-1])
+		}
+		//反向横向
+		for i := m; i > mStart && n-nStart > 1; i-- {
+			result = append(result, matrix[n-1][i-1])
+		}
+		//反向竖向
+		for i := n - 1; i > nStart+1 && m-mStart > 1; i-- {
+			result = append(result, matrix[i-1][mStart])
+		}
+		mStart++
+		nStart++
+		m--
+		n--
+	}
+	return result
 }
 
 func rotate(matrix [][]int) {
