@@ -53,21 +53,37 @@ func rotate(matrix [][]int) {
 	//}
 	//fmt.Println(matrix)
 
-	//保留temp值，按照公式移动
-	//matrix[row][col]  => matrix[col][n - row - 1]
-	//matrix[col][n - row - 1] => matrix[n - row - 1][n - col - 1]
-	//matrix[n - row - 1][n - col - 1] => matrix[n - col - 1][row]
-	//matrix[n - col - 1][row] => matrix[row][col]
+	////保留temp值，按照公式移动
+	////matrix[row][col]  => matrix[col][n - row - 1]
+	////matrix[col][n - row - 1] => matrix[n - row - 1][n - col - 1]
+	////matrix[n - row - 1][n - col - 1] => matrix[n - col - 1][row]
+	////matrix[n - col - 1][row] => matrix[row][col]
+	//n := len(matrix)
+	//for i := 0; i < n/2; i++ {
+	//	for j := 0; j < (n+1)/2; j++ {
+	//		temp := matrix[i][j]
+	//		matrix[i][j] = matrix[n-j-1][i]
+	//		matrix[n-j-1][i] = matrix[n-i-1][n-j-1]
+	//		matrix[n-i-1][n-j-1] = matrix[j][n-i-1]
+	//		matrix[j][n-i-1] = temp
+	//	}
+	//}
+
+	//翻转的办法 通过水平和对角线翻转，即可得到目标等式matrix[row][col] = matrix[n - col - 1][row]
 	n := len(matrix)
+	//水平翻转
 	for i := 0; i < n/2; i++ {
-		for j := 0; j < (n+1)/2; j++ {
-			temp := matrix[i][j]
-			matrix[i][j] = matrix[n-j-1][i]
-			matrix[n-j-1][i] = matrix[n-i-1][n-j-1]
-			matrix[n-i-1][n-j-1] = matrix[j][n-i-1]
-			matrix[j][n-i-1] = temp
+		for j := 0; j < n; j++ {
+			matrix[i][j], matrix[n-i-1][j] = matrix[n-i-1][j], matrix[i][j]
 		}
 	}
+	//对角线翻转
+	for i := 0; i < n; i++ {
+		for j := 0; j < i; j++ {
+			matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+		}
+	}
+
 }
 
 func mergeArray(intervals [][]int) [][]int {
