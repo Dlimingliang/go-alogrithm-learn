@@ -26,7 +26,30 @@ func main() {
 	//fmt.Println(dominantIndex([]int{3, 6, 1, 0}))
 	//fmt.Println(plusOne([]int{9, 9}))
 	//fmt.Println(searchInsert([]int{1, 3, 5, 6}, 2))
-	fmt.Println(mergeArray([][]int{[]int{1, 4}, []int{0, 4}}))
+	//fmt.Println(mergeArray([][]int{[]int{1, 2}, []int{7, 8}}))
+	rotate([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}})
+}
+
+func rotate(matrix [][]int) {
+	m, n := len(matrix[0])-1, len(matrix)-1
+	mStart, nStart, temp := 0, 0, 0
+	for mStart < m {
+		value := matrix[nStart][mStart+temp]
+		matrix[nStart][mStart+temp] = matrix[n-temp][mStart]
+		matrix[n-temp][mStart] = matrix[n][m-temp]
+		matrix[n][m-temp] = matrix[nStart+temp][n]
+		matrix[nStart+temp][n] = value
+		//移动完毕
+		temp++
+		if temp == m-mStart {
+			mStart++
+			nStart++
+			m--
+			n--
+			temp = 0
+		}
+	}
+	fmt.Println(matrix)
 }
 
 func mergeArray(intervals [][]int) [][]int {
