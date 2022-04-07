@@ -29,7 +29,33 @@ func main() {
 	//fmt.Println(mergeArray([][]int{[]int{1, 2}, []int{7, 8}}))
 	//rotate([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}}
 	//spiralOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}})
-	fmt.Println(generate(5))
+	//fmt.Println(generate(5))
+	setZeroes([][]int{[]int{1, 1, 1}, []int{1, 0, 1}, []int{1, 1, 1}})
+}
+
+func setZeroes(matrix [][]int) {
+	//如果某个元素为0，则将所在的行和列都清0
+	m, n := len(matrix[0]), len(matrix)
+	rowMap, colMap := make(map[int]int), make(map[int]int)
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			if matrix[i][j] == 0 {
+				rowMap[i] = i
+				colMap[j] = i
+			}
+		}
+	}
+	for key := range rowMap {
+		for i := 0; i < m; i++ {
+			matrix[key][i] = 0
+		}
+	}
+	for key := range colMap {
+		for i := 0; i < n; i++ {
+			matrix[i][key] = 0
+		}
+	}
+	fmt.Println(matrix)
 }
 
 func generate(numRows int) [][]int {
