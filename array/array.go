@@ -28,7 +28,43 @@ func main() {
 	//fmt.Println(searchInsert([]int{1, 3, 5, 6}, 2))
 	//fmt.Println(mergeArray([][]int{[]int{1, 2}, []int{7, 8}}))
 	//rotate([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}}
-	spiralOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}})
+	//spiralOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}})
+	fmt.Println(generate(5))
+}
+
+func generate(numRows int) [][]int {
+	//自己的写法
+	//result := make([][]int, numRows)
+	//start := 1
+	//for start <= numRows {
+	//	if start == 1 {
+	//		result = append(result, []int{1})
+	//	} else if start == 2 {
+	//		result = append(result, []int{1, 1})
+	//	} else {
+	//		arr := make([]int, start)
+	//		arr[0] = 1
+	//		arr[start - 1] = 1
+	//		for i := 1; i < start - 1; i++ {
+	//			arr[i] = result[start - 2][i] + result[start - 2][i - 1]
+	//		}
+	//		result = append(result, arr)
+	//	}
+	//	start++
+	//}
+	//return result
+
+	//更优
+	result := make([][]int, numRows)
+	for i := range result {
+		result[i] = make([]int, i+1)
+		result[i][0] = 1
+		result[i][i] = 1
+		for j := 1; j < i; j++ {
+			result[i][j] = result[i-1][j] + result[i-1][j-1]
+		}
+	}
+	return result
 }
 
 func spiralOrder(matrix [][]int) []int {
