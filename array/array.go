@@ -31,49 +31,91 @@ func main() {
 	//spiralOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}})
 	//fmt.Println(generate(5))
 	//setZeroes([][]int{[]int{1, 1, 1}, []int{1, 0, 1}, []int{1, 1, 1}})
-	fmt.Println(findDiagonalOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}}))
+	fmt.Println(findDiagonalOrder([][]int{[]int{2, 5}, []int{8, 4}, []int{0, -1}}))
 }
 
 func findDiagonalOrder(mat [][]int) []int {
-	result := make([]int, 0)
-	m, n := len(mat), len(mat[0])
-	x, y := 0, 0
-	up := true
+	//my result
+	//result := make([]int, 0)
+	//m, n := len(mat), len(mat[0])
+	//x, y := 0, 0
+	//up := true
+	//
+	//for x < m && y < n {
+	//	if up {
+	//		for x >= 0 && y+1 <= n {
+	//			result = append(result, mat[x][y])
+	//			x--
+	//			y++
+	//		}
+	//		x++
+	//		y--
+	//		//拐点 上升优先右侧 然后下面
+	//		if y+1 < n {
+	//			y++
+	//		} else {
+	//			x++
+	//		}
+	//		up = false
+	//	} else {
+	//		for x+1 <= m && y >= 0 {
+	//			result = append(result, mat[x][y])
+	//			x++
+	//			y--
+	//		}
+	//		x--
+	//		y++
+	//		//拐点 下降优先下面 然后右侧
+	//		if x+1 < m {
+	//			x++
+	//		} else {
+	//			y++
+	//		}
+	//		up = true
+	//	}
+	//}
+	//return result
 
-	for x < m && y < n {
-		if up {
-			for x >= 0 && y+1 <= n {
-				result = append(result, mat[x][y])
-				x--
-				y++
-			}
+	//对角线遍历法
+	index, m, n := 0, len(mat), len(mat[0])
+	result := make([]int, m*n)
+	temArr := make([]int, 0)
+	for i := 0; i < m+n-1; i++ {
+		//清空temArr
+		temArr = temArr[:0]
+		//计算起点
+		var x int
+		var y int
+		if i < n {
+			x = 0
+			y = i
+		} else {
+			x = i - n + 1
+			y = n - 1
+		}
+
+		for y >= 0 && x < m {
+			temArr = append(temArr, mat[x][y])
 			x++
 			y--
-			//拐点 上升优先右侧 然后下面
-			if y+1 < n {
-				y++
-			} else {
-				x++
-			}
-			up = false
-		} else {
-			for x+1 <= m && y >= 0 {
-				result = append(result, mat[x][y])
-				x++
-				y--
-			}
-			x--
-			y++
-			//拐点 下降优先下面 然后右侧
-			if x+1 < m {
-				x++
-			} else {
-				y++
-			}
-			up = true
+		}
+
+		if i%2 == 0 {
+			reverse(temArr)
+		}
+		for j := 0; j < len(temArr); j++ {
+			result[index] = temArr[j]
+			index++
 		}
 	}
 	return result
+}
+
+func reverse(s []int) []int {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		s[i], s[j] = s[j], s[i]
+	}
+	return s
 }
 
 func setZeroes(matrix [][]int) {
