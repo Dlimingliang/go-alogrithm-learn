@@ -30,7 +30,50 @@ func main() {
 	//rotate([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}}
 	//spiralOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}})
 	//fmt.Println(generate(5))
-	setZeroes([][]int{[]int{1, 1, 1}, []int{1, 0, 1}, []int{1, 1, 1}})
+	//setZeroes([][]int{[]int{1, 1, 1}, []int{1, 0, 1}, []int{1, 1, 1}})
+	fmt.Println(findDiagonalOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}}))
+}
+
+func findDiagonalOrder(mat [][]int) []int {
+	result := make([]int, 0)
+	m, n := len(mat), len(mat[0])
+	x, y := 0, 0
+	up := true
+
+	for x < m && y < n {
+		if up {
+			for x >= 0 && y+1 <= n {
+				result = append(result, mat[x][y])
+				x--
+				y++
+			}
+			x++
+			y--
+			//拐点 上升优先右侧 然后下面
+			if y+1 < n {
+				y++
+			} else {
+				x++
+			}
+			up = false
+		} else {
+			for x+1 <= m && y >= 0 {
+				result = append(result, mat[x][y])
+				x++
+				y--
+			}
+			x--
+			y++
+			//拐点 下降优先下面 然后右侧
+			if x+1 < m {
+				x++
+			} else {
+				y++
+			}
+			up = true
+		}
+	}
+	return result
 }
 
 func setZeroes(matrix [][]int) {
