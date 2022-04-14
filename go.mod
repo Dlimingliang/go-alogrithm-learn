@@ -1,3 +1,3 @@
 module github.com/Dlimingliang/go-alogrithm-learn
 
-go 1.17
+go 1.18
