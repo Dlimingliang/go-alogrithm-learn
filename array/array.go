@@ -33,7 +33,23 @@ func main() {
 	//setZeroes([][]int{[]int{1, 1, 1}, []int{1, 0, 1}, []int{1, 1, 1}})
 	//fmt.Println(findDiagonalOrder([][]int{[]int{2, 5}, []int{8, 4}, []int{0, -1}}))
 	//reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
-	fmt.Println(arrayPairSum([]int{6, 2, 6, 5, 1, 2}))
+	//fmt.Println(arrayPairSum([]int{6, 2, 6, 5, 1, 2}))
+	fmt.Println(twoSum([]int{-1, 0}, -1))
+}
+
+func twoSum(numbers []int, target int) []int {
+	left, right := 0, len(numbers)-1
+	for left < right {
+		sum := numbers[left] + numbers[right]
+		if sum == target {
+			return []int{left + 1, right + 1}
+		} else if sum > target {
+			right--
+		} else {
+			left++
+		}
+	}
+	return []int{-1, -1}
 }
 
 func arrayPairSum(nums []int) int {
