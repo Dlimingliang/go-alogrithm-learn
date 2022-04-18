@@ -31,7 +31,17 @@ func main() {
 	//spiralOrder([][]int{[]int{1, 2, 3}, []int{4, 5, 6}, []int{7, 8, 9}, []int{10, 11, 12}})
 	//fmt.Println(generate(5))
 	//setZeroes([][]int{[]int{1, 1, 1}, []int{1, 0, 1}, []int{1, 1, 1}})
-	fmt.Println(findDiagonalOrder([][]int{[]int{2, 5}, []int{8, 4}, []int{0, -1}}))
+	//fmt.Println(findDiagonalOrder([][]int{[]int{2, 5}, []int{8, 4}, []int{0, -1}}))
+	reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
+}
+
+func reverseString(s []byte) {
+	left, right := 0, len(s)
+	for left < right-1 {
+		s[left], s[right-1] = s[right-1], s[left]
+		left++
+		right--
+	}
 }
 
 func findDiagonalOrder(mat [][]int) []int {
