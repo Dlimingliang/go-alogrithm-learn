@@ -32,7 +32,18 @@ func main() {
 	//fmt.Println(generate(5))
 	//setZeroes([][]int{[]int{1, 1, 1}, []int{1, 0, 1}, []int{1, 1, 1}})
 	//fmt.Println(findDiagonalOrder([][]int{[]int{2, 5}, []int{8, 4}, []int{0, -1}}))
-	reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
+	//reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
+	fmt.Println(arrayPairSum([]int{6, 2, 6, 5, 1, 2}))
+}
+
+func arrayPairSum(nums []int) int {
+	sort.Ints(nums)
+	result, n := 0, len(nums)
+	for i := 0; i < n && i+1 < n; {
+		result += nums[i]
+		i += 2
+	}
+	return result
 }
 
 func reverseString(s []byte) {
