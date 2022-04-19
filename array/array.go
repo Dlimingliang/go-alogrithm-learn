@@ -34,7 +34,30 @@ func main() {
 	//fmt.Println(findDiagonalOrder([][]int{[]int{2, 5}, []int{8, 4}, []int{0, -1}}))
 	//reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
 	//fmt.Println(arrayPairSum([]int{6, 2, 6, 5, 1, 2}))
-	fmt.Println(twoSum([]int{-1, 0}, -1))
+	//fmt.Println(twoSum([]int{-1, 0}, -1))
+	fmt.Println(minSubArrayLen(213, []int{12, 28, 83, 4, 25, 26, 25, 2, 25, 25, 25, 12}))
+}
+
+func minSubArrayLen(target int, nums []int) int {
+	//双层for循环硬解，时间复杂度O(n^2)
+	n := len(nums)
+	result := math.MaxInt
+	for i := 0; i < n; i++ {
+		sum := 0
+		for j := i; j < n; j++ {
+			sum += nums[j]
+			if sum >= target {
+				if j-i+1 < result {
+					result = j - i + 1
+				}
+				break
+			}
+		}
+		if i == 0 && sum < target {
+			return 0
+		}
+	}
+	return result
 }
 
 func twoSum(numbers []int, target int) []int {
