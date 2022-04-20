@@ -35,26 +35,41 @@ func main() {
 	//reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
 	//fmt.Println(arrayPairSum([]int{6, 2, 6, 5, 1, 2}))
 	//fmt.Println(twoSum([]int{-1, 0}, -1))
-	fmt.Println(minSubArrayLen(213, []int{12, 28, 83, 4, 25, 26, 25, 2, 25, 25, 25, 12}))
+	fmt.Println(minSubArrayLen(4, []int{1, 1, 1}))
 }
 
 func minSubArrayLen(target int, nums []int) int {
-	//双层for循环硬解，时间复杂度O(n^2)
-	n := len(nums)
-	result := math.MaxInt
+	////双层for循环硬解，时间复杂度O(n^2)
+	//n := len(nums)
+	//result := math.MaxInt
+	//for i := 0; i < n; i++ {
+	//	sum := 0
+	//	for j := i; j < n; j++ {
+	//		sum += nums[j]
+	//		if sum >= target {
+	//			if j-i+1 < result {
+	//				result = j - i + 1
+	//			}
+	//			break
+	//		}
+	//	}
+	//	if i == 0 && sum < target {
+	//		return 0
+	//	}
+	//}
+	//return result
+
+	//快慢指针
+	result, n := 0, len(nums)
+	slow, sum := 0, 0
 	for i := 0; i < n; i++ {
-		sum := 0
-		for j := i; j < n; j++ {
-			sum += nums[j]
-			if sum >= target {
-				if j-i+1 < result {
-					result = j - i + 1
-				}
-				break
+		sum += nums[i]
+		for sum >= target {
+			if result == 0 || i-slow+1 < result {
+				result = i - slow + 1
 			}
-		}
-		if i == 0 && sum < target {
-			return 0
+			sum -= nums[slow]
+			slow++
 		}
 	}
 	return result
