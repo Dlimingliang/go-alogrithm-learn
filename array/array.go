@@ -36,7 +36,7 @@ func main() {
 	//fmt.Println(arrayPairSum([]int{6, 2, 6, 5, 1, 2}))
 	//fmt.Println(twoSum([]int{-1, 0}, -1))
 	//fmt.Println(minSubArrayLen(4, []int{1, 1, 1}))
-	rotateArray([]int{1, 2, 3, 4, 5, 6, 7}, 3)
+	rotateArray([]int{1, 2, 3, 4, 5, 6, 7, 8}, 2)
 }
 
 func rotateArray(nums []int, k int) {
@@ -78,6 +78,17 @@ func rotateArray(nums []int, k int) {
 	//	}
 	//	start++
 	//}
+
+	k %= len(nums)
+	reverseRotateArray(nums)
+	reverseRotateArray(nums[:k])
+	reverseRotateArray(nums[k:])
+}
+
+func reverseRotateArray(a []int) {
+	for i, n := 0, len(a); i < n/2; i++ {
+		a[i], a[n-1-i] = a[n-1-i], a[i]
+	}
 }
 
 func minSubArrayLen(target int, nums []int) int {
