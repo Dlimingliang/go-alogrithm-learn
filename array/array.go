@@ -35,7 +35,49 @@ func main() {
 	//reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
 	//fmt.Println(arrayPairSum([]int{6, 2, 6, 5, 1, 2}))
 	//fmt.Println(twoSum([]int{-1, 0}, -1))
-	fmt.Println(minSubArrayLen(4, []int{1, 1, 1}))
+	//fmt.Println(minSubArrayLen(4, []int{1, 1, 1}))
+	rotateArray([]int{1, 2, 3, 4, 5, 6, 7}, 3)
+}
+
+func rotateArray(nums []int, k int) {
+	//1,2,3,4,5,6,7   3
+	//5 6 7 1 2 3 4
+	//1,2,3,4,5,6,7,8   2
+	//7,8,1,2,3,4,5,6
+
+	////时间复杂度O(n^2)
+	//n := len(nums)
+	//moveNum := k % n
+	//start := 0
+	//for i := n - moveNum; i < n; i++ {
+	//	temp := i
+	//	for temp > start {
+	//		nums[temp], nums[temp-1] = nums[temp-1], nums[temp]
+	//		temp--
+	//	}
+	//	start++
+	//}
+
+	//第二种，记录移动位置
+	//n := len(nums)
+	//moveNum := k % n
+	//move := make(map[int]int)
+	//start := 0
+	//for len(move) < n {
+	//	tempIndex := start
+	//	tempValue := nums[tempIndex]
+	//	for {
+	//		index := (tempIndex + moveNum) % n
+	//		if _, ok := move[index]; ok {
+	//			break
+	//		} else {
+	//			nums[index], tempValue = tempValue, nums[index]
+	//			tempIndex = index
+	//			move[index] = index
+	//		}
+	//	}
+	//	start++
+	//}
 }
 
 func minSubArrayLen(target int, nums []int) int {
