@@ -36,7 +36,22 @@ func main() {
 	//fmt.Println(arrayPairSum([]int{6, 2, 6, 5, 1, 2}))
 	//fmt.Println(twoSum([]int{-1, 0}, -1))
 	//fmt.Println(minSubArrayLen(4, []int{1, 1, 1}))
-	rotateArray([]int{1, 2, 3, 4, 5, 6, 7, 8}, 2)
+	//rotateArray([]int{1, 2, 3, 4, 5, 6, 7, 8}, 2)
+	fmt.Println(getRow(3))
+}
+
+func getRow(rowIndex int) []int {
+	result := make([]int, rowIndex)
+	for i := 0; i <= rowIndex; i++ {
+		current := make([]int, i+1)
+		current[0] = 1
+		current[i] = 1
+		for j := 1; j < i; j++ {
+			current[j] = result[j] + result[j-1]
+		}
+		result = current
+	}
+	return result
 }
 
 func rotateArray(nums []int, k int) {
