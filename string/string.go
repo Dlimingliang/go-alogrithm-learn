@@ -1,12 +1,34 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
 func main() {
-	fmt.Println(addBinary("11", "1"))
+	//fmt.Println(addBinary("11", "1"))
+	fmt.Println(reverseWords("a good   example"))
+}
+
+func reverseWords(s string) string {
+	//时间复杂度O(n)
+	//空间复杂度O(n)
+	s = strings.TrimSpace(s)
+	sl := strings.Fields(s)
+	var buffer bytes.Buffer
+	for i := len(sl) - 1; i >= 0; i-- {
+		if sl[i] != " " {
+			if i == 0 {
+				buffer.WriteString(sl[i])
+			} else {
+				buffer.WriteString(sl[i])
+				buffer.WriteString(" ")
+			}
+		}
+	}
+	return buffer.String()
 }
 
 func addBinary(a string, b string) string {
