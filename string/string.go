@@ -9,7 +9,23 @@ import (
 
 func main() {
 	//fmt.Println(addBinary("11", "1"))
-	fmt.Println(reverseWords("a good   example"))
+	//fmt.Println(reverseWords("a good   example"))
+	fmt.Println(reverseWords3("God Ding"))
+}
+
+func reverseWords3(s string) string {
+	sl := strings.Fields(s)
+	var buffer bytes.Buffer
+	for i := 0; i < len(sl); i++ {
+		runes := []rune(sl[i])
+		for j := len(runes) - 1; j >= 0; j-- {
+			buffer.WriteRune(runes[j])
+		}
+		if i != len(sl)-1 {
+			buffer.WriteString(" ")
+		}
+	}
+	return buffer.String()
 }
 
 func reverseWords(s string) string {
