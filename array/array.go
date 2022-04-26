@@ -37,7 +37,50 @@ func main() {
 	//fmt.Println(twoSum([]int{-1, 0}, -1))
 	//fmt.Println(minSubArrayLen(4, []int{1, 1, 1}))
 	//rotateArray([]int{1, 2, 3, 4, 5, 6, 7, 8}, 2)
-	fmt.Println(getRow(3))
+	//fmt.Println(getRow(3))
+	fmt.Println(maxRotateFunction([]int{4, 3, 2, 6}))
+}
+
+func maxRotateFunction(nums []int) int {
+	//计算F0
+	//n := len(nums)
+	//f0 := 0
+	//sum := 0
+	//preSum := make([]int, 0)
+	//for i, num := range nums {
+	//	f0 += i * num
+	//	sum += num
+	//	preSum = append(preSum, sum)
+	//}
+	//result := f0
+	//for k := 1; k < n; k++ {
+	//	temp := f0 + (k * preSum[n-k-1]) - (n-k)*(sum-preSum[n-k-1])
+	//	result = max(temp, result)
+	//}
+	//return result
+
+	numSum := 0
+	for _, v := range nums {
+		numSum += v
+	}
+	f := 0
+	for i, num := range nums {
+		f += i * num
+	}
+	ans := f
+	for i := len(nums) - 1; i > 0; i-- {
+		f += numSum - len(nums)*nums[i]
+		ans = max(ans, f)
+	}
+	return ans
+}
+
+func max(num1, num2 int) int {
+	if num1 > num2 {
+		return num1
+	} else {
+		return num2
+	}
 }
 
 func getRow(rowIndex int) []int {
