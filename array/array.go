@@ -38,7 +38,22 @@ func main() {
 	//fmt.Println(minSubArrayLen(4, []int{1, 1, 1}))
 	//rotateArray([]int{1, 2, 3, 4, 5, 6, 7, 8}, 2)
 	//fmt.Println(getRow(3))
-	fmt.Println(maxRotateFunction([]int{4, 3, 2, 6}))
+	//fmt.Println(maxRotateFunction([]int{4, 3, 2, 6}))
+	fmt.Println(findMin([]int{4, 5, 6, 7, 0, 1, 2}))
+}
+
+func findMin(nums []int) int {
+	n := len(nums)
+	left, right := 0, n-1
+	for left < right {
+		mid := (right-left)/2 + left
+		if nums[mid] >= nums[left] && nums[mid] > nums[right] {
+			left = mid + 1
+		} else {
+			right = mid
+		}
+	}
+	return nums[left]
 }
 
 func maxRotateFunction(nums []int) int {
