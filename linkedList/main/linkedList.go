@@ -8,16 +8,44 @@ type ListNode struct {
 }
 
 func main() {
-	node1 := ListNode{Val: 3}
-	node2 := ListNode{Val: 2}
-	node3 := ListNode{Val: 0}
-	node4 := ListNode{Val: -4}
+
+	comNode1 := ListNode{Val: 2}
+	comNode2 := ListNode{Val: 4}
+	comNode1.Next = &comNode2
+
+	node1 := ListNode{Val: 1}
+	node2 := ListNode{Val: 9}
+	node3 := ListNode{Val: 1}
 	node1.Next = &node2
 	node2.Next = &node3
-	node3.Next = &node4
-	node4.Next = &node2
+	node3.Next = &comNode1
+
+	node4 := ListNode{Val: 3}
+	node4.Next = &comNode1
+
 	//fmt.Println(hasCycle(&node1))
-	fmt.Println(detectCycle(&node1).Val)
+	//fmt.Println(detectCycle(&node1).Val)
+	fmt.Println(getIntersectionNode(&node1, &node4))
+}
+
+func getIntersectionNode(headA, headB *ListNode) *ListNode {
+	slow := headA
+	fast := headB
+	for slow != fast {
+
+		if slow == nil {
+			slow = headB
+		} else {
+			slow = slow.Next
+		}
+
+		if fast == nil {
+			fast = headA
+		} else {
+			fast = fast.Next
+		}
+	}
+	return slow
 }
 
 func hasCycle(head *ListNode) bool {
