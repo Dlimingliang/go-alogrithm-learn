@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type ListNode struct {
 	Val  int
 	Next *ListNode
@@ -9,23 +7,42 @@ type ListNode struct {
 
 func main() {
 
-	comNode1 := ListNode{Val: 2}
-	comNode2 := ListNode{Val: 4}
-	comNode1.Next = &comNode2
-
 	node1 := ListNode{Val: 1}
-	node2 := ListNode{Val: 9}
-	node3 := ListNode{Val: 1}
+	node2 := ListNode{Val: 2}
+	//node3 := ListNode{Val: 3}
+	//node4 := ListNode{Val: 4}
+	//node5 := ListNode{Val: 5}
 	node1.Next = &node2
-	node2.Next = &node3
-	node3.Next = &comNode1
-
-	node4 := ListNode{Val: 3}
-	node4.Next = &comNode1
+	//node2.Next = &node3
+	//node3.Next = &node4
+	//node4.Next = &node5
 
 	//fmt.Println(hasCycle(&node1))
 	//fmt.Println(detectCycle(&node1).Val)
-	fmt.Println(getIntersectionNode(&node1, &node4))
+	//fmt.Println(getIntersectionNode(&node1, &node4))
+	removeNthFromEnd(&node1, 1)
+}
+
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	count := 0
+	temp := head
+	for temp != nil {
+		temp = temp.Next
+		count++
+	}
+
+	removeIndex := count - n
+	if removeIndex == 0 {
+		head = head.Next
+	} else {
+		pre, current := head, head
+		for removeIndex > 0 {
+			pre, current = current, current.Next
+			removeIndex--
+		}
+		pre.Next = current.Next
+	}
+	return head
 }
 
 func getIntersectionNode(headA, headB *ListNode) *ListNode {
