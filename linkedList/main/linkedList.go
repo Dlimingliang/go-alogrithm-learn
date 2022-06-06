@@ -8,19 +8,34 @@ type ListNode struct {
 func main() {
 
 	node1 := ListNode{Val: 1}
-	//node2 := ListNode{Val: 2}
-	//node3 := ListNode{Val: 3}
+	node2 := ListNode{Val: 2}
+	node3 := ListNode{Val: 3}
 	//node4 := ListNode{Val: 4}
 	//node5 := ListNode{Val: 5}
-	//node1.Next = &node2
-	//node2.Next = &node3
+	node1.Next = &node2
+	node2.Next = &node3
 	//node3.Next = &node4
 	//node4.Next = &node5
 
 	//fmt.Println(hasCycle(&node1))
 	//fmt.Println(detectCycle(&node1).Val)
 	//fmt.Println(getIntersectionNode(&node1, &node4))
-	removeNthFromEnd(&node1, 1)
+	//removeNthFromEnd(&node1, 1)
+	reverseList(&node1)
+}
+
+func reverseList(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+	tempHead := head
+	for head.Next != nil {
+		temp := head.Next
+		head.Next = temp.Next
+		temp.Next = tempHead
+		tempHead = temp
+	}
+	return tempHead
 }
 
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
