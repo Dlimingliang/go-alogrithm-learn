@@ -8,11 +8,11 @@ type ListNode struct {
 func main() {
 
 	node1 := ListNode{Val: 1}
-	node2 := ListNode{Val: 2}
+	//node2 := ListNode{Val: 2}
 	//node3 := ListNode{Val: 3}
 	//node4 := ListNode{Val: 4}
 	//node5 := ListNode{Val: 5}
-	node1.Next = &node2
+	//node1.Next = &node2
 	//node2.Next = &node3
 	//node3.Next = &node4
 	//node4.Next = &node5
@@ -24,25 +24,39 @@ func main() {
 }
 
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
-	count := 0
-	temp := head
-	for temp != nil {
-		temp = temp.Next
-		count++
+	//计算长度法
+	//count := 0
+	//temp := head
+	//for temp != nil {
+	//	temp = temp.Next
+	//	count++
+	//}
+	//
+	//removeIndex := count - n
+	//if removeIndex == 0 {
+	//	head = head.Next
+	//} else {
+	//	pre, current := head, head
+	//	for removeIndex > 0 {
+	//		pre, current = current, current.Next
+	//		removeIndex--
+	//	}
+	//	pre.Next = current.Next
+	//}
+	//return head
+
+	//双指针法
+	dump := &ListNode{Val: 0, Next: head}
+	fast, slow := head, dump
+	for i := 0; i < n; i++ {
+		fast = fast.Next
 	}
 
-	removeIndex := count - n
-	if removeIndex == 0 {
-		head = head.Next
-	} else {
-		pre, current := head, head
-		for removeIndex > 0 {
-			pre, current = current, current.Next
-			removeIndex--
-		}
-		pre.Next = current.Next
+	for ; fast != nil; fast = fast.Next {
+		slow = slow.Next
 	}
-	return head
+	slow.Next = slow.Next.Next
+	return dump.Next
 }
 
 func getIntersectionNode(headA, headB *ListNode) *ListNode {
