@@ -25,17 +25,29 @@ func main() {
 }
 
 func reverseList(head *ListNode) *ListNode {
-	if head == nil {
-		return nil
+	//向前移动法
+	//if head == nil {
+	//	return nil
+	//}
+	//tempHead := head
+	//for head.Next != nil {
+	//	temp := head.Next
+	//	head.Next = temp.Next
+	//	temp.Next = tempHead
+	//	tempHead = temp
+	//}
+	//return tempHead
+
+	//反转指针法
+	var pre *ListNode
+	curr := head
+	for curr != nil {
+		next := curr.Next
+		curr.Next = pre
+		pre = curr
+		curr = next
 	}
-	tempHead := head
-	for head.Next != nil {
-		temp := head.Next
-		head.Next = temp.Next
-		temp.Next = tempHead
-		tempHead = temp
-	}
-	return tempHead
+	return pre
 }
 
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
