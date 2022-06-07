@@ -8,8 +8,8 @@ type ListNode struct {
 func main() {
 
 	node1 := ListNode{Val: 1}
-	node2 := ListNode{Val: 2}
-	node3 := ListNode{Val: 3}
+	node2 := ListNode{Val: 1}
+	node3 := ListNode{Val: 1}
 	//node4 := ListNode{Val: 4}
 	//node5 := ListNode{Val: 5}
 	node1.Next = &node2
@@ -21,7 +21,22 @@ func main() {
 	//fmt.Println(detectCycle(&node1).Val)
 	//fmt.Println(getIntersectionNode(&node1, &node4))
 	//removeNthFromEnd(&node1, 1)
-	reverseList(&node1)
+	//reverseList(&node1)
+	removeElements(&node1, 1)
+}
+
+func removeElements(head *ListNode, val int) *ListNode {
+	dump := &ListNode{
+		Next: head,
+	}
+	for temp := dump; temp.Next != nil; {
+		if temp.Next.Val == val {
+			temp.Next = temp.Next.Next
+		} else {
+			temp = temp.Next
+		}
+	}
+	return dump.Next
 }
 
 func reverseList(head *ListNode) *ListNode {
