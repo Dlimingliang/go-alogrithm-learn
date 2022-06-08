@@ -32,14 +32,16 @@ func oddEvenList(head *ListNode) *ListNode {
 	tempOdd, tempEven := oddDump, evenDump
 	for index := 1; temp != nil; index++ {
 		if index%2 == 0 {
-			tempEven.Next = &ListNode{Val: temp.Val}
+			tempEven.Next = temp
 			tempEven = tempEven.Next
 		} else {
-			tempOdd.Next = &ListNode{Val: temp.Val}
+			tempOdd.Next = temp
 			tempOdd = tempOdd.Next
 		}
 		temp = temp.Next
 	}
+	tempOdd.Next = nil
+	tempEven.Next = nil
 	tempOdd.Next = evenDump.Next
 	return oddDump.Next
 }
