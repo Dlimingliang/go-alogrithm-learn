@@ -27,23 +27,46 @@ func main() {
 }
 
 func oddEvenList(head *ListNode) *ListNode {
-	temp := head
-	oddDump, evenDump := &ListNode{Val: 0}, &ListNode{Val: 0}
-	tempOdd, tempEven := oddDump, evenDump
-	for index := 1; temp != nil; index++ {
-		if index%2 == 0 {
-			tempEven.Next = temp
-			tempEven = tempEven.Next
-		} else {
-			tempOdd.Next = temp
-			tempOdd = tempOdd.Next
-		}
-		temp = temp.Next
+
+	//自己的想法
+	//if head == nil || head.Next == nil {
+	//	return head
+	//}
+	//
+	//temp := head.Next.Next
+	//oddDump, evenDump := head, head.Next
+	//tempOdd, tempEven := oddDump, evenDump
+	//for index := 3; temp != nil; index++ {
+	//	if index%2 == 0 {
+	//		tempEven.Next = temp
+	//		tempEven = tempEven.Next
+	//	} else {
+	//		tempOdd.Next = temp
+	//		tempOdd = tempOdd.Next
+	//	}
+	//	temp = temp.Next
+	//}
+	//tempOdd.Next = nil
+	//tempEven.Next = nil
+	//tempOdd.Next = evenDump
+	//return oddDump
+
+	//官方的写法
+	if head == nil {
+		return head
 	}
-	tempOdd.Next = nil
-	tempEven.Next = nil
-	tempOdd.Next = evenDump.Next
-	return oddDump.Next
+
+	evenHead := head.Next
+	odd := head
+	even := evenHead
+	if even != nil && even.Next != nil {
+		odd.Next = even.Next
+		odd = odd.Next
+		even.Next = odd.Next
+		even = even.Next
+	}
+	odd.Next = evenHead
+	return head
 }
 
 func removeElements(head *ListNode, val int) *ListNode {
