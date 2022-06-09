@@ -26,6 +26,31 @@ func main() {
 	oddEvenList(&node1)
 }
 
+func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
+	head := &ListNode{Val: 0}
+	dump := head
+	for list1 != nil && list2 != nil {
+		if list1.Val < list2.Val {
+			dump.Next = list1
+			dump = dump.Next
+			list1 = list1.Next
+		} else {
+			dump.Next = list2
+			dump = dump.Next
+			list2 = list2.Next
+		}
+	}
+
+	if list1 != nil {
+		dump.Next = list1
+	}
+
+	if list2 != nil {
+		dump.Next = list2
+	}
+	return head.Next
+}
+
 func oddEvenList(head *ListNode) *ListNode {
 
 	//自己的想法
