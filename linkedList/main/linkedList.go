@@ -7,15 +7,27 @@ type ListNode struct {
 
 func main() {
 
-	node1 := ListNode{Val: 1}
-	node2 := ListNode{Val: 2}
-	node3 := ListNode{Val: 3}
-	//node4 := ListNode{Val: 4}
-	//node5 := ListNode{Val: 5}
+	node1 := ListNode{Val: 9}
+	node2 := ListNode{Val: 9}
+	node3 := ListNode{Val: 9}
+	node4 := ListNode{Val: 9}
+	node5 := ListNode{Val: 9}
+	node6 := ListNode{Val: 9}
+	node7 := ListNode{Val: 9}
 	node1.Next = &node2
 	node2.Next = &node3
-	//node3.Next = &node4
-	//node4.Next = &node5
+	node3.Next = &node4
+	node4.Next = &node5
+	node5.Next = &node6
+	node6.Next = &node7
+
+	node11 := ListNode{Val: 9}
+	node12 := ListNode{Val: 9}
+	node13 := ListNode{Val: 9}
+	node14 := ListNode{Val: 9}
+	node11.Next = &node12
+	node12.Next = &node13
+	node13.Next = &node14
 
 	//fmt.Println(hasCycle(&node1))
 	//fmt.Println(detectCycle(&node1).Val)
@@ -23,7 +35,44 @@ func main() {
 	//removeNthFromEnd(&node1, 1)
 	//reverseList(&node1)
 	//removeElements(&node1, 1)
-	oddEvenList(&node1)
+	//oddEvenList(&node1)
+	addTwoNumbers(&node1, &node11)
+}
+
+func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	dump := &ListNode{Val: 0}
+	temp := dump
+	addNum := 0
+	for l1 != nil && l2 != nil {
+		next := (l1.Val + l2.Val + addNum) % 10
+		temp.Next = &ListNode{Val: next}
+		temp = temp.Next
+		addNum = (l1.Val + l2.Val + addNum) / 10
+		l1 = l1.Next
+		l2 = l2.Next
+	}
+
+	for l1 != nil {
+		next := (l1.Val + addNum) % 10
+		temp.Next = &ListNode{Val: next}
+		temp = temp.Next
+		addNum = (l1.Val + addNum) / 10
+		l1 = l1.Next
+	}
+
+	for l2 != nil {
+		next := (l2.Val + addNum) % 10
+		temp.Next = &ListNode{Val: next}
+		temp = temp.Next
+		addNum = (l2.Val + addNum) / 10
+		l2 = l2.Next
+	}
+
+	if addNum != 0 {
+		temp.Next = &ListNode{Val: addNum}
+	}
+
+	return dump.Next
 }
 
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
