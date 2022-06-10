@@ -14,11 +14,15 @@ type Node struct {
 
 func main() {
 
-	node1 := Node{Val: 1}
-	node2 := Node{Val: 2}
-	node3 := Node{Val: 3}
+	node1 := ListNode{Val: 1}
+	node2 := ListNode{Val: 2}
+	node3 := ListNode{Val: 3}
+	node4 := ListNode{Val: 4}
+	node5 := ListNode{Val: 5}
 	node1.Next = &node2
-	node1.Child = &node3
+	node2.Next = &node3
+	node3.Next = &node4
+	node4.Next = &node5
 
 	//fmt.Println(hasCycle(&node1))
 	//fmt.Println(detectCycle(&node1).Val)
@@ -28,7 +32,42 @@ func main() {
 	//removeElements(&node1, 1)
 	//oddEvenList(&node1)
 	//addTwoNumbers(&node1, &node11)
-	flatten(&node1)
+	//flatten(&node1)
+	rotateRight(&node1, 2)
+}
+
+func rotateRight(head *ListNode, k int) *ListNode {
+
+	if head == nil || head.Next == nil || k == 0 {
+		return head
+	}
+
+	//首先计算节点个数
+	sum := 0
+	temp := head
+	for temp != nil {
+		sum++
+		temp = temp.Next
+	}
+	//将链表分为前后俩个, 将后半部分进行反序, 将前半部分保持，将前边最后一个断开
+	k = k % sum
+	if k == 0 {
+		return head
+	}
+	pre := sum - k
+	temp = head
+	for i := 1; i < pre; i++ {
+		temp = temp.Next
+	}
+	node := temp.Next
+	temp.Next = nil
+	//将反序后的后节点与前节点相连, 返回后节点的第一个节点
+	tempNode := node
+	for tempNode.Next != nil {
+		tempNode = tempNode.Next
+	}
+	tempNode.Next = head
+	return node
 }
 
 func flatten(root *Node) *Node {
