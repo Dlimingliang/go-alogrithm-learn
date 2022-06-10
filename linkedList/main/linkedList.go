@@ -5,29 +5,20 @@ type ListNode struct {
 	Next *ListNode
 }
 
+type Node struct {
+	Val   int
+	Prev  *Node
+	Next  *Node
+	Child *Node
+}
+
 func main() {
 
-	node1 := ListNode{Val: 9}
-	node2 := ListNode{Val: 9}
-	node3 := ListNode{Val: 9}
-	node4 := ListNode{Val: 9}
-	node5 := ListNode{Val: 9}
-	node6 := ListNode{Val: 9}
-	node7 := ListNode{Val: 9}
+	node1 := Node{Val: 1}
+	node2 := Node{Val: 2}
+	node3 := Node{Val: 3}
 	node1.Next = &node2
-	node2.Next = &node3
-	node3.Next = &node4
-	node4.Next = &node5
-	node5.Next = &node6
-	node6.Next = &node7
-
-	node11 := ListNode{Val: 9}
-	node12 := ListNode{Val: 9}
-	node13 := ListNode{Val: 9}
-	node14 := ListNode{Val: 9}
-	node11.Next = &node12
-	node12.Next = &node13
-	node13.Next = &node14
+	node1.Child = &node3
 
 	//fmt.Println(hasCycle(&node1))
 	//fmt.Println(detectCycle(&node1).Val)
@@ -36,7 +27,33 @@ func main() {
 	//reverseList(&node1)
 	//removeElements(&node1, 1)
 	//oddEvenList(&node1)
-	addTwoNumbers(&node1, &node11)
+	//addTwoNumbers(&node1, &node11)
+	flatten(&node1)
+}
+
+func flatten(root *Node) *Node {
+	dump := &Node{}
+	temp := root
+	flattenFunc(dump, temp)
+	if dump.Next != nil {
+		dump.Next.Prev = nil
+	}
+	return dump.Next
+}
+
+func flattenFunc(dump *Node, curr *Node) *Node {
+	for curr != nil {
+		dump.Next = curr
+		curr.Prev = dump
+		dump = dump.Next
+		next := curr.Next
+		if curr.Child != nil {
+			dump = flattenFunc(dump, curr.Child)
+		}
+		curr.Child = nil
+		curr = next
+	}
+	return dump
 }
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
