@@ -236,7 +236,7 @@ func reverseString(s []byte) {
 }
 
 func findDiagonalOrder(mat [][]int) []int {
-	//my result
+	//custome result
 	//result := make([]int, 0)
 	//m, n := len(mat), len(mat[0])
 	//x, y := 0, 0
