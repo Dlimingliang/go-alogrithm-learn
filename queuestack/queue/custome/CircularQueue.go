@@ -1,20 +1,18 @@
 package my
 
 type MyCircularQueue struct {
-	Queue   []int
-	MaxSize int
-	Size    int
-	Head    int
-	Tail    int
+	Queue []int
+	Size  int
+	Head  int
+	Tail  int
 }
 
 func Constructor(k int) MyCircularQueue {
 	cq := MyCircularQueue{
-		Queue:   make([]int, k, k),
-		MaxSize: k,
-		Size:    0,
-		Head:    -1,
-		Tail:    -1,
+		Queue: make([]int, k, k),
+		Size:  0,
+		Head:  -1,
+		Tail:  -1,
 	}
 	return cq
 }
@@ -25,7 +23,7 @@ func (this *MyCircularQueue) EnQueue(value int) bool {
 			this.Head++
 		}
 		this.Tail++
-		this.Tail = this.Tail % this.MaxSize
+		this.Tail = this.Tail % cap(this.Queue)
 		this.Queue[this.Tail] = value
 		this.Size++
 		return true
@@ -35,18 +33,14 @@ func (this *MyCircularQueue) EnQueue(value int) bool {
 
 func (this *MyCircularQueue) DeQueue() bool {
 	if !this.IsEmpty() {
-
 		if this.Head == this.Tail {
 			this.Head = -1
 			this.Tail = -1
 		} else {
-			this.Queue[this.Head] = 0
 			this.Head++
-			this.Head = this.Head % this.MaxSize
+			this.Head = this.Head % cap(this.Queue)
 		}
-
 		this.Size--
-
 		return true
 	}
 	return false
@@ -74,7 +68,7 @@ func (this *MyCircularQueue) IsEmpty() bool {
 }
 
 func (this *MyCircularQueue) IsFull() bool {
-	if this.MaxSize == this.Size {
+	if this.Size == cap(this.Queue) {
 		return true
 	}
 	return false

@@ -7,17 +7,14 @@ import (
 )
 
 func main() {
-	cq := my.Constructor(2)
+	cq := my.Constructor(3)
+	fmt.Println(cq.EnQueue(1))
+	fmt.Println(cq.EnQueue(2))
+	fmt.Println(cq.EnQueue(3))
 	fmt.Println(cq.EnQueue(4))
 	fmt.Println(cq.Rear())
-	fmt.Println(cq.EnQueue(9))
+	fmt.Println(cq.IsFull())
 	fmt.Println(cq.DeQueue())
-	fmt.Println(cq.Front())
-	fmt.Println(cq.DeQueue())
-	fmt.Println(cq.DeQueue())
-	fmt.Println(cq.IsEmpty())
-	fmt.Println(cq.DeQueue())
-	fmt.Println(cq.EnQueue(6))
 	fmt.Println(cq.EnQueue(4))
 	fmt.Println(cq.Rear())
 }
