@@ -4,27 +4,21 @@ type MyCircularQueue struct {
 	Queue []int
 	Size  int
 	Head  int
-	Tail  int
 }
 
 func Constructor(k int) MyCircularQueue {
 	cq := MyCircularQueue{
 		Queue: make([]int, k, k),
 		Size:  0,
-		Head:  -1,
-		Tail:  -1,
+		Head:  0,
 	}
 	return cq
 }
 
 func (this *MyCircularQueue) EnQueue(value int) bool {
 	if !this.IsFull() {
-		if this.Head == -1 {
-			this.Head++
-		}
-		this.Tail++
-		this.Tail = this.Tail % cap(this.Queue)
-		this.Queue[this.Tail] = value
+		tail := (this.Head + this.Size) % cap(this.Queue)
+		this.Queue[tail] = value
 		this.Size++
 		return true
 	}
@@ -33,13 +27,7 @@ func (this *MyCircularQueue) EnQueue(value int) bool {
 
 func (this *MyCircularQueue) DeQueue() bool {
 	if !this.IsEmpty() {
-		if this.Head == this.Tail {
-			this.Head = -1
-			this.Tail = -1
-		} else {
-			this.Head++
-			this.Head = this.Head % cap(this.Queue)
-		}
+		this.Head = (this.Head + 1) % cap(this.Queue)
 		this.Size--
 		return true
 	}
@@ -55,13 +43,14 @@ func (this *MyCircularQueue) Front() int {
 
 func (this *MyCircularQueue) Rear() int {
 	if !this.IsEmpty() {
-		return this.Queue[this.Tail]
+		tail := (this.Head + this.Size - 1) % cap(this.Queue)
+		return this.Queue[tail]
 	}
 	return -1
 }
 
 func (this *MyCircularQueue) IsEmpty() bool {
-	if this.Head == -1 && this.Tail == -1 {
+	if this.Size == 0 {
 		return true
 	}
 	return false
