@@ -36,7 +36,50 @@ func main() {
 	//		{'1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1'},
 	//		{'1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1'},
 	//	}))
-	fmt.Println(openLock([]string{"8887", "8889", "8878", "8898", "8788", "8988", "7888", "9888"}, "8888"))
+	//fmt.Println(openLock([]string{"8887", "8889", "8878", "8898", "8788", "8988", "7888", "9888"}, "8888"))
+	fmt.Println(numSquares(1))
+}
+
+func numSquares(n int) int {
+	var maxN int
+	for i := 1; i <= n; i++ {
+		temp := i * i
+		if temp < n {
+			maxN = i
+		} else if temp == n {
+			return 1
+		}
+	}
+	result := 1
+	queue := getSquaresValues(maxN)
+	for len(queue) > 0 {
+		size := len(queue)
+		result++
+		for i := 0; i < size; i++ {
+			temp := queue[0]
+			queue = queue[1:]
+			if temp == n {
+				return result
+			}
+			for _, value := range getSquaresValues(maxN) {
+				tempValue := value + temp
+				if tempValue < n {
+					queue = append(queue, tempValue)
+				} else if tempValue == n {
+					return result
+				}
+			}
+		}
+	}
+	return result
+}
+
+func getSquaresValues(n int) []int {
+	result := make([]int, 0)
+	for i := 1; i <= n; i++ {
+		result = append(result, i*i)
+	}
+	return result
 }
 
 func openLock(deadends []string, target string) int {
