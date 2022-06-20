@@ -40,23 +40,24 @@ func main() {
 }
 
 func openLock(deadends []string, target string) int {
-	if "0000" == target {
+	const start = "0000"
+	if start == target {
 		return 0
 	}
 
-	deadMap := make(map[string]int)
-	for i, value := range deadends {
-		deadMap[value] = i
+	deadMap := make(map[string]bool)
+	for _, value := range deadends {
+		deadMap[value] = true
 	}
-	if _, ok := deadMap["0000"]; ok {
-		return 0
+	if deadMap[start] {
+		return -1
 	}
 
 	result := 0
 	queue := make([]string, 0)
-	queue = append(queue, "0000")
-	visited := make(map[string]int, 0)
-	visited["0000"] = 1
+	queue = append(queue, start)
+	visited := make(map[string]bool, 0)
+	visited[start] = true
 
 	for len(queue) > 0 {
 		length := len(queue)
@@ -65,14 +66,12 @@ func openLock(deadends []string, target string) int {
 			temp := queue[0]
 			queue = queue[1:]
 			for _, value := range getValue(temp) {
-				_, deadOk := deadMap[value]
-				_, visitedOk := visited[value]
-				if !deadOk && !visitedOk {
+				if !deadMap[value] && !visited[value] {
 					if value == target {
 						return result
 					}
 					queue = append(queue, value)
-					visited[value] = 1
+					visited[value] = true
 				}
 			}
 		}
@@ -80,43 +79,23 @@ func openLock(deadends []string, target string) int {
 	return -1
 }
 
-func pre(x rune) rune {
-	if x == '0' {
-		return '9'
-	} else {
-		return x - 1
-	}
-}
-
-func next(x rune) rune {
-	if x == '9' {
-		return '0'
-	} else {
-		return x + 1
-	}
-}
-
 func getValue(str string) []string {
-	slice := make([]string, 0)
-	runes := []rune(str)
-	for i := 0; i < 4; i++ {
-		temp := runes[i]
-		runes[i] = pre(temp)
-		slice = append(slice, string(runes))
-		runes[i] = next(temp)
-		slice = append(slice, string(runes))
-		runes[i] = temp
-	}
-	return slice
-}
-
-func contains(elems []string, v string) bool {
-	for _, s := range elems {
-		if v == s {
-			return true
+	result := make([]string, 0)
+	bytes := []byte(str)
+	for i, value := range bytes {
+		bytes[i] = value - 1
+		if bytes[i] < '0' {
+			bytes[i] = '9'
 		}
+		result = append(result, string(bytes))
+		bytes[i] = value + 1
+		if bytes[i] > '9' {
+			bytes[i] = '0'
+		}
+		result = append(result, string(bytes))
+		bytes[i] = value
 	}
-	return false
+	return result
 }
 
 func numIslands(grid [][]byte) int {
