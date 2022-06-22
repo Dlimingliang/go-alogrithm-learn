@@ -3,7 +3,26 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(isValid("([)]"))
+	//fmt.Println(isValid("([)]"))
+	fmt.Println(dailyTemperatures([]int{30, 60, 90}))
+}
+
+func dailyTemperatures(temperatures []int) []int {
+	result := make([]int, len(temperatures))
+	stack := make([]int, 0)
+	for i, value := range temperatures {
+		if len(stack) == 0 {
+			stack = append(stack, i)
+		} else {
+			for len(stack) > 0 && temperatures[stack[len(stack)-1]] < value {
+				index := stack[len(stack)-1]
+				result[index] = i - index
+				stack = stack[:len(stack)-1]
+			}
+			stack = append(stack, i)
+		}
+	}
+	return result
 }
 
 func isValid(s string) bool {
