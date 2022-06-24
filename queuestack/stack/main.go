@@ -9,12 +9,31 @@ func main() {
 	//fmt.Println(isValid("([)]"))
 	//fmt.Println(dailyTemperatures([]int{30, 60, 90}))
 	//fmt.Println(evalRPN([]string{"10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"}))
-	fmt.Println(numIslands([][]byte{
-		{'1', '1', '1', '1', '0'},
-		{'1', '1', '0', '1', '0'},
-		{'1', '1', '0', '0', '0'},
-		{'0', '0', '0', '0', '0'},
-	}))
+	//fmt.Println(numIslands([][]byte{
+	//	{'1', '1', '1', '1', '0'},
+	//	{'1', '1', '0', '1', '0'},
+	//	{'1', '1', '0', '0', '0'},
+	//	{'0', '0', '0', '0', '0'},
+	//}))
+	fmt.Println(findTargetSumWays([]int{1}, 1))
+}
+
+func findTargetSumWays(nums []int, target int) int {
+	var res int
+	res = findTargetSumWaysRecursion(nums, 0, 0, target, res)
+	return res
+}
+
+func findTargetSumWaysRecursion(nums []int, index, sum, target, res int) int {
+	if len(nums) == index {
+		if target == sum {
+			res++
+		}
+		return res
+	}
+	res = findTargetSumWaysRecursion(nums, index+1, sum+nums[index], target, res)
+	res = findTargetSumWaysRecursion(nums, index+1, sum-nums[index], target, res)
+	return res
 }
 
 func numIslands(grid [][]byte) int {
