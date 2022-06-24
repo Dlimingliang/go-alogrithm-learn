@@ -5,6 +5,12 @@ import (
 	"strconv"
 )
 
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
 func main() {
 	//fmt.Println(isValid("([)]"))
 	//fmt.Println(dailyTemperatures([]int{30, 60, 90}))
@@ -15,7 +21,29 @@ func main() {
 	//	{'1', '1', '0', '0', '0'},
 	//	{'0', '0', '0', '0', '0'},
 	//}))
-	fmt.Println(findTargetSumWays([]int{1}, 1))
+	//fmt.Println(findTargetSumWays([]int{1}, 1))
+	root := TreeNode{Val: 1}
+	two := TreeNode{Val: 2}
+	three := TreeNode{Val: 3}
+	two.Left = &three
+	root.Right = &two
+	fmt.Println(inorderTraversal(&root))
+}
+
+func inorderTraversal(root *TreeNode) []int {
+	var res []int
+	res = inorderTraversalRecursion(root, res)
+	return res
+}
+
+func inorderTraversalRecursion(root *TreeNode, res []int) []int {
+	if root == nil {
+		return res
+	}
+	res = inorderTraversalRecursion(root.Left, res)
+	res = append(res, root.Val)
+	res = inorderTraversalRecursion(root.Right, res)
+	return res
 }
 
 func findTargetSumWays(nums []int, target int) int {
