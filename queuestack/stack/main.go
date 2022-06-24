@@ -30,10 +30,21 @@ func main() {
 	fmt.Println(inorderTraversal(&root))
 }
 
-func inorderTraversal(root *TreeNode) []int {
-	var res []int
-	res = inorderTraversalRecursion(root, res)
-	return res
+func inorderTraversal(root *TreeNode) (res []int) {
+	//var res []int
+	//res = inorderTraversalRecursion(root, res)
+	//return res
+	var inorder func(node *TreeNode)
+	inorder = func(node *TreeNode) {
+		if node == nil {
+			return
+		}
+		inorder(node.Left)
+		res = append(res, node.Val)
+		inorder(node.Right)
+	}
+	inorder(root)
+	return
 }
 
 func inorderTraversalRecursion(root *TreeNode, res []int) []int {
