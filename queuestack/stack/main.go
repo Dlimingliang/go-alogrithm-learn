@@ -1,8 +1,11 @@
 package main
 
 import (
+	bytes2 "bytes"
 	"fmt"
 	"strconv"
+	"strings"
+	"unicode"
 )
 
 type TreeNode struct {
@@ -22,12 +25,45 @@ func main() {
 	//	{'0', '0', '0', '0', '0'},
 	//}))
 	//fmt.Println(findTargetSumWays([]int{1}, 1))
-	root := TreeNode{Val: 1}
-	two := TreeNode{Val: 2}
-	three := TreeNode{Val: 3}
-	two.Left = &three
-	root.Right = &two
-	fmt.Println(inorderTraversal(&root))
+	//root := TreeNode{Val: 1}
+	//two := TreeNode{Val: 2}
+	//three := TreeNode{Val: 3}
+	//two.Left = &three
+	//root.Right = &two
+	//fmt.Println(inorderTraversal(&root))
+	s := "Hello 1 2 3"
+	bytes := []byte(s)
+	for _, value := range bytes {
+		fmt.Printf("%c = %v\n", value, unicode.IsNumber(rune(value)))
+	}
+}
+
+func decodeString(s string) string {
+	numberStack := make([]int, 0)
+	strStack := make([]string, 0)
+	stack := make([]string, 0)
+	for i := 0; i < len(s); {
+		if unicode.IsNumber(rune(s[i])) {
+			number, _ := strconv.Atoi(string(s[i]))
+			numberStack = append(numberStack, number)
+			i++
+		} else if s[i] == '[' {
+			j := i + 1
+			for ; unicode.IsLetter(rune(s[j])); j++ {
+			}
+			strStack = append(strStack, s[i+1:j])
+			i = j + 1
+		} else {
+			var buffer bytes2.Buffer
+			for j := 0; j < numberStack[len(numberStack)-1]; j++ {
+				buffer.WriteString(strStack[len(strStack)-1])
+			}
+			stack = append(stack, buffer.String())
+			numberStack = numberStack[:len(numberStack)-1]
+			strStack = strStack[:len(numberStack)-1]
+		}
+	}
+	return strings.Join(stack, "")
 }
 
 func inorderTraversal(root *TreeNode) (res []int) {
