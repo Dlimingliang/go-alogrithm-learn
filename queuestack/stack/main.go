@@ -1,11 +1,9 @@
 package main
 
 import (
-	bytes2 "bytes"
 	"fmt"
 	"strconv"
 	"strings"
-	"unicode"
 )
 
 type TreeNode struct {
@@ -35,35 +33,51 @@ func main() {
 }
 
 func decodeString(s string) string {
-	numberStack := make([]int, 0)
-	strStack := make([]string, 0)
-	stack := make([]string, 0)
-	for i := 0; i < len(s); {
-		if unicode.IsNumber(rune(s[i])) {
-			number, _ := strconv.Atoi(string(s[i]))
-			numberStack = append(numberStack, number)
-			i++
-		} else if s[i] == '[' {
-			j := i + 1
-			for ; unicode.IsLetter(rune(s[j])); j++ {
-			}
-			strStack = append(strStack, s[i+1:j])
-			i = j
-		} else if s[i] == ']' {
-			var buffer bytes2.Buffer
-			for j := 0; j < numberStack[len(numberStack)-1]; j++ {
-				buffer.WriteString(strStack[len(strStack)-1])
-			}
-			stack = append(stack, buffer.String())
-			numberStack = numberStack[:len(numberStack)-1]
-			strStack = strStack[:len(strStack)-1]
-			i++
+	stk := []string{}
+	ptr := 0
+	for ptr < len(s) {
+		cur := s[ptr]
+		if cur >= '0' && cur <= '9' {
+			digits := getDigits(s, &ptr)
+			stk = append(stk, digits)
+		} else if (cur >= 'a' && cur <= 'z' || cur >= 'A' && cur <= 'Z') || cur == '[' {
+			stk = append(stk, string(cur))
+			ptr++
 		} else {
-			stack = append(stack, s[i:i+1])
-			i++
+			ptr++
+			sub := []string{}
+			for stk[len(stk)-1] != "[" {
+				sub = append(sub, stk[len(stk)-1])
+				stk = stk[:len(stk)-1]
+			}
+			for i := 0; i < len(sub)/2; i++ {
+				sub[i], sub[len(sub)-i-1] = sub[len(sub)-i-1], sub[i]
+			}
+			stk = stk[:len(stk)-1]
+			repTime, _ := strconv.Atoi(stk[len(stk)-1])
+			stk = stk[:len(stk)-1]
+			t := strings.Repeat(getString(sub), repTime)
+			stk = append(stk, t)
 		}
 	}
-	return strings.Join(stack, "")
+	return getString(stk)
+
+}
+
+func getDigits(s string, ptr *int) string {
+	ret := ""
+	for ; s[*ptr] >= '0' && s[*ptr] <= '9'; *ptr++ {
+		ret += string(s[*ptr])
+	}
+	return ret
+}
+
+func getString(v []string) string {
+	ret := ""
+	for _, s := range v {
+		ret += s
+	}
+	return ret
 }
 
 func inorderTraversal(root *TreeNode) (res []int) {
