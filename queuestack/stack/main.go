@@ -31,11 +31,7 @@ func main() {
 	//two.Left = &three
 	//root.Right = &two
 	//fmt.Println(inorderTraversal(&root))
-	s := "Hello 1 2 3"
-	bytes := []byte(s)
-	for _, value := range bytes {
-		fmt.Printf("%c = %v\n", value, unicode.IsNumber(rune(value)))
-	}
+	fmt.Println(decodeString("3[a2[c]]"))
 }
 
 func decodeString(s string) string {
@@ -52,15 +48,19 @@ func decodeString(s string) string {
 			for ; unicode.IsLetter(rune(s[j])); j++ {
 			}
 			strStack = append(strStack, s[i+1:j])
-			i = j + 1
-		} else {
+			i = j
+		} else if s[i] == ']' {
 			var buffer bytes2.Buffer
 			for j := 0; j < numberStack[len(numberStack)-1]; j++ {
 				buffer.WriteString(strStack[len(strStack)-1])
 			}
 			stack = append(stack, buffer.String())
 			numberStack = numberStack[:len(numberStack)-1]
-			strStack = strStack[:len(numberStack)-1]
+			strStack = strStack[:len(strStack)-1]
+			i++
+		} else {
+			stack = append(stack, s[i:i+1])
+			i++
 		}
 	}
 	return strings.Join(stack, "")
