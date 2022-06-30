@@ -30,7 +30,56 @@ func main() {
 	//root.Right = &two
 	//fmt.Println(inorderTraversal(&root))
 	//fmt.Println(decodeString("3[a2[c]]"))
-	fmt.Println(floodFill([][]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, 0, 0, 0))
+	//fmt.Println(floodFill([][]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, 0, 0, 0))
+	fmt.Println(updateMatrix([][]int{{0, 1, 1, 0, 0}, {0, 1, 1, 0, 0}, {0, 1, 0, 0, 1}, {1, 1, 1, 1, 0}, {1, 0, 0, 1, 0}}))
+}
+
+func updateMatrix(mat [][]int) [][]int {
+	n := len(mat)
+	m := len(mat[0])
+	res := make([][]int, n)
+	for i := 0; i < len(res); i++ {
+		res[i] = make([]int, m)
+	}
+	for i := 0; i < n; i++ {
+		for j := 0; j < m; j++ {
+			res[i][j] = updateMatrixBFS(mat, i, j, n, m)
+		}
+	}
+	return res
+}
+
+func updateMatrixBFS(mat [][]int, row, column, n, m int) int {
+	res := 0
+	queue := make([]int, 0)
+	queue = append(queue, column*n+row)
+	for len(queue) > 0 {
+		size := len(queue)
+		for i := 0; i < size; i++ {
+			value := queue[0]
+			y := value % n
+			x := value / n
+			if mat[y][x] == 0 {
+				return res
+			}
+
+			if y-1 >= 0 {
+				queue = append(queue, x*n+(y-1))
+			}
+			if y+1 < n {
+				queue = append(queue, x*n+(y+1))
+			}
+			if x-1 >= 0 {
+				queue = append(queue, (x-1)*n+y)
+			}
+			if x+1 < m {
+				queue = append(queue, (x+1)*n+y)
+			}
+			queue = queue[1:]
+		}
+		res++
+	}
+	return res
 }
 
 func floodFill(image [][]int, sr int, sc int, color int) [][]int {
