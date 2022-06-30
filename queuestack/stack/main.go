@@ -29,7 +29,26 @@ func main() {
 	//two.Left = &three
 	//root.Right = &two
 	//fmt.Println(inorderTraversal(&root))
-	fmt.Println(decodeString("3[a2[c]]"))
+	//fmt.Println(decodeString("3[a2[c]]"))
+	fmt.Println(floodFill([][]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, 0, 0, 0))
+}
+
+func floodFill(image [][]int, sr int, sc int, color int) [][]int {
+	visited := make(map[int]bool, 0)
+	floodFillRecursion(image, sr, sc, color, image[sr][sc], visited)
+	return image
+}
+
+func floodFillRecursion(image [][]int, sr, sc, color, target int, visited map[int]bool) {
+	if sr < 0 || sr == len(image) || sc < 0 || sc == len(image[0]) || image[sr][sc] != target || visited[sc*len(image)+sr] {
+		return
+	}
+	visited[sc*len(image)+sr] = true
+	image[sr][sc] = color
+	floodFillRecursion(image, sr-1, sc, color, target, visited)
+	floodFillRecursion(image, sr+1, sc, color, target, visited)
+	floodFillRecursion(image, sr, sc-1, color, target, visited)
+	floodFillRecursion(image, sr, sc+1, color, target, visited)
 }
 
 func decodeString(s string) string {
