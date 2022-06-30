@@ -31,7 +31,33 @@ func main() {
 	//fmt.Println(inorderTraversal(&root))
 	//fmt.Println(decodeString("3[a2[c]]"))
 	//fmt.Println(floodFill([][]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, 0, 0, 0))
-	fmt.Println(updateMatrix([][]int{{0, 1, 1, 0, 0}, {0, 1, 1, 0, 0}, {0, 1, 0, 0, 1}, {1, 1, 1, 1, 0}, {1, 0, 0, 1, 0}}))
+	//fmt.Println(updateMatrix([][]int{{0, 1, 1, 0, 0}, {0, 1, 1, 0, 0}, {0, 1, 0, 0, 1}, {1, 1, 1, 1, 0}, {1, 0, 0, 1, 0}}))
+	fmt.Println(canVisitAllRooms([][]int{{1, 3}, {3, 0, 1}, {2}, {0}}))
+}
+
+func canVisitAllRooms(rooms [][]int) bool {
+	visited := make([]int, len(rooms))
+	queue := make([]int, 0)
+	queue = append(queue, 0)
+	for len(queue) > 0 {
+		size := len(queue)
+		for i := 0; i < size; i++ {
+			value := queue[0]
+			if visited[value] == 0 {
+				visited[value] = 1
+				for _, key := range rooms[value] {
+					queue = append(queue, key)
+				}
+			}
+			queue = queue[1:]
+		}
+	}
+	for _, value := range visited {
+		if value == 0 {
+			return false
+		}
+	}
+	return true
 }
 
 func updateMatrix(mat [][]int) [][]int {
