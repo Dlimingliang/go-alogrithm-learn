@@ -31,8 +31,8 @@ func main() {
 	//fmt.Println(inorderTraversal(&root))
 	//fmt.Println(decodeString("3[a2[c]]"))
 	//fmt.Println(floodFill([][]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}, 0, 0, 0))
-	//fmt.Println(updateMatrix([][]int{{0, 1, 1, 0, 0}, {0, 1, 1, 0, 0}, {0, 1, 0, 0, 1}, {1, 1, 1, 1, 0}, {1, 0, 0, 1, 0}}))
-	fmt.Println(canVisitAllRooms([][]int{{1, 3}, {3, 0, 1}, {2}, {0}}))
+	fmt.Println(updateMatrix([][]int{{0, 0, 0}, {0, 1, 0}, {1, 1, 1}}))
+	//fmt.Println(canVisitAllRooms([][]int{{1, 3}, {3, 0, 1}, {2}, {0}}))
 }
 
 func canVisitAllRooms(rooms [][]int) bool {
@@ -67,9 +67,46 @@ func updateMatrix(mat [][]int) [][]int {
 	for i := 0; i < len(res); i++ {
 		res[i] = make([]int, m)
 	}
+	visited := make([][]bool, n)
+	for i := 0; i < len(visited); i++ {
+		visited[i] = make([]bool, m)
+	}
+	queue := make([][]int, 0)
+
+	//入列0
 	for i := 0; i < n; i++ {
 		for j := 0; j < m; j++ {
-			res[i][j] = updateMatrixBFS(mat, i, j, n, m)
+			if mat[i][j] == 0 {
+				queue = append(queue, []int{i, j})
+				visited[i][j] = true
+			}
+		}
+	}
+
+	//开始出列
+	for len(queue) > 0 {
+		temp := queue[0]
+		queue = queue[1:]
+		x, y := temp[1], temp[0]
+		if x-1 >= 0 && !visited[y][x-1] {
+			queue = append(queue, []int{y, x - 1})
+			res[y][x-1] = res[y][x] + 1
+			visited[y][x-1] = true
+		}
+		if x+1 < m && !visited[y][x+1] {
+			queue = append(queue, []int{y, x + 1})
+			res[y][x+1] = res[y][x] + 1
+			visited[y][x+1] = true
+		}
+		if y-1 >= 0 && !visited[y-1][x] {
+			queue = append(queue, []int{y - 1, x})
+			res[y-1][x] = res[y][x] + 1
+			visited[y-1][x] = true
+		}
+		if y+1 < n && !visited[y+1][x] {
+			queue = append(queue, []int{y + 1, x})
+			res[y+1][x] = res[y][x] + 1
+			visited[y+1][x] = true
 		}
 	}
 	return res
