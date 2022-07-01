@@ -1,31 +1,38 @@
 package hashset
 
 type MyHashSet struct {
-	Set []int
+	Set [10][]int
 }
 
 func Constructor() MyHashSet {
-	return MyHashSet{Set: []int{}}
+	return MyHashSet{}
+}
+
+func HashKey(key int) int {
+	return key % 10
 }
 
 func (this *MyHashSet) Add(key int) {
 	if !this.Contains(key) {
-		this.Set = append(this.Set, key)
+		this.Set[HashKey(key)] = append(this.Set[HashKey(key)], key)
 	}
 }
 
 func (this *MyHashSet) Remove(key int) {
-	for i, value := range this.Set {
+	hash := HashKey(key)
+	list := this.Set[hash]
+	for i, value := range list {
 		if value == key {
-			temp := this.Set[i+1:]
-			this.Set = this.Set[0:i]
-			this.Set = append(this.Set, temp...)
+			temp := this.Set[hash][i+1:]
+			this.Set[hash] = this.Set[hash][0:i]
+			this.Set[hash] = append(this.Set[hash], temp...)
 		}
 	}
 }
 
 func (this *MyHashSet) Contains(key int) bool {
-	for _, value := range this.Set {
+	list := this.Set[HashKey(key)]
+	for _, value := range list {
 		if value == key {
 			return true
 		}
