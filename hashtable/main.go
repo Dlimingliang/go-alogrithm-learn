@@ -1,9 +1,6 @@
 package main
 
-import (
-	"fmt"
-	"github.com/Dlimingliang/go-alogrithm-learn/hashtable/hashmap"
-)
+import "fmt"
 
 func main() {
 	//mySet := hashset.Constructor()
@@ -15,15 +12,35 @@ func main() {
 	//fmt.Println(mySet.Contains(2))
 	//mySet.Remove(2)
 	//fmt.Println(mySet.Contains(2))
+	//myMap := hashmap.Constructor()
+	//myMap.Put(1, 1)
+	//myMap.Put(2, 2)
+	//fmt.Println(myMap.Get(1))
+	//fmt.Println(myMap.Get(3))
+	//myMap.Put(2, 1)
+	//fmt.Println(myMap.Get(2))
+	//myMap.Remove(2)
+	//fmt.Println(myMap.Get(2))
+	fmt.Println(containsDuplicate([]int{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}))
 
-	myMap := hashmap.Constructor()
-	myMap.Put(1, 1)
-	myMap.Put(2, 2)
-	fmt.Println(myMap.Get(1))
-	fmt.Println(myMap.Get(3))
-	myMap.Put(2, 1)
-	fmt.Println(myMap.Get(2))
-	myMap.Remove(2)
-	fmt.Println(myMap.Get(2))
+}
 
+func singleNumber(nums []int) int {
+	single := 0
+	for _, num := range nums {
+		single ^= num
+	}
+	return single
+}
+
+func containsDuplicate(nums []int) bool {
+	repeatedMap := make(map[int]bool, 0)
+	for _, num := range nums {
+		if repeatedMap[num] {
+			return true
+		} else {
+			repeatedMap[num] = true
+		}
+	}
+	return false
 }
