@@ -22,7 +22,30 @@ func main() {
 	//myMap.Remove(2)
 	//fmt.Println(myMap.Get(2))
 	//fmt.Println(containsDuplicate([]int{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}))
-	fmt.Println(intersection([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
+	//fmt.Println(intersection([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
+	fmt.Println(isHappy(2))
+}
+
+func isHappy(n int) bool {
+	numMap := make(map[int]bool, 0)
+	for {
+		value, temp := 0, n
+		for temp > 0 {
+			num := temp % 10
+			num = num * num
+			temp = temp / 10
+			value += num
+		}
+		if value == 1 {
+			return true
+		}
+		if numMap[value] {
+			return false
+		}
+		numMap[value] = true
+		n = value
+	}
+	return false
 }
 
 func intersection(nums1 []int, nums2 []int) []int {
