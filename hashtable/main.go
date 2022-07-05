@@ -21,8 +21,37 @@ func main() {
 	//fmt.Println(myMap.Get(2))
 	//myMap.Remove(2)
 	//fmt.Println(myMap.Get(2))
-	fmt.Println(containsDuplicate([]int{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}))
+	//fmt.Println(containsDuplicate([]int{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}))
+	fmt.Println(intersection([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
+}
 
+func intersection(nums1 []int, nums2 []int) []int {
+	res := make([]int, 0)
+	tempMap := make(map[int]bool, 0)
+	numMap := make(map[int]bool)
+	if len(nums1) > len(nums2) {
+		for _, value := range nums1 {
+			numMap[value] = true
+		}
+		for _, value := range nums2 {
+			if numMap[value] {
+				tempMap[value] = true
+			}
+		}
+	} else {
+		for _, value := range nums2 {
+			numMap[value] = true
+		}
+		for _, value := range nums1 {
+			if numMap[value] {
+				tempMap[value] = true
+			}
+		}
+	}
+	for key, _ := range tempMap {
+		res = append(res, key)
+	}
+	return res
 }
 
 func singleNumber(nums []int) int {
