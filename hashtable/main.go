@@ -23,7 +23,20 @@ func main() {
 	//fmt.Println(myMap.Get(2))
 	//fmt.Println(containsDuplicate([]int{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}))
 	//fmt.Println(intersection([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
-	fmt.Println(isHappy(2))
+	//fmt.Println(isHappy(2))
+	fmt.Println(twoSum([]int{3, 2, 4}, 6))
+}
+
+func twoSum(nums []int, target int) []int {
+	numMap := make(map[int]int)
+	for i, num := range nums {
+		if _, ok := numMap[num]; ok {
+			return []int{numMap[num], i}
+		} else {
+			numMap[target-num] = i
+		}
+	}
+	return nil
 }
 
 func isHappy(n int) bool {
