@@ -24,7 +24,22 @@ func main() {
 	//fmt.Println(containsDuplicate([]int{1, 1, 1, 3, 3, 4, 3, 2, 4, 2}))
 	//fmt.Println(intersection([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
 	//fmt.Println(isHappy(2))
-	fmt.Println(twoSum([]int{3, 2, 4}, 6))
+	//fmt.Println(twoSum([]int{3, 2, 4}, 6))
+	fmt.Println(isIsomorphic("foo", "bar"))
+}
+
+func isIsomorphic(s string, t string) bool {
+	s2t := map[byte]byte{}
+	t2s := map[byte]byte{}
+	for i := range s {
+		x, y := s[i], t[i]
+		if s2t[x] > 0 && s2t[x] != y || t2s[y] > 0 && t2s[y] != x {
+			return false
+		}
+		s2t[x] = y
+		t2s[y] = x
+	}
+	return true
 }
 
 func twoSum(nums []int, target int) []int {
