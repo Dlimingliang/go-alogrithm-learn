@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
 func main() {
 	//mySet := hashset.Constructor()
@@ -25,7 +28,36 @@ func main() {
 	//fmt.Println(intersection([]int{4, 9, 5}, []int{9, 4, 9, 8, 4}))
 	//fmt.Println(isHappy(2))
 	//fmt.Println(twoSum([]int{3, 2, 4}, 6))
-	fmt.Println(isIsomorphic("foo", "bar"))
+	//fmt.Println(isIsomorphic("foo", "bar"))
+	fmt.Println(findRestaurant([]string{"Shogun", "Tapioca Express", "Burger King", "KFC"},
+		[]string{"KFC", "Shogun", "Burger King"}))
+}
+
+func findRestaurant(list1 []string, list2 []string) []string {
+	var res []string
+	repeatedMap := make(map[string]int)
+	strMap := make(map[string]int)
+	for i, str := range list1 {
+		strMap[str] = i
+	}
+	min := math.MaxInt64
+	for i, str := range list2 {
+		value, ok := strMap[str]
+		if ok {
+			temp := i + value
+			repeatedMap[str] = temp
+			if temp < min {
+				min = temp
+			}
+		}
+	}
+
+	for key, value := range repeatedMap {
+		if value == min {
+			res = append(res, key)
+		}
+	}
+	return res
 }
 
 func isIsomorphic(s string, t string) bool {
