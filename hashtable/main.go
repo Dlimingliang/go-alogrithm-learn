@@ -35,27 +35,22 @@ func main() {
 
 func findRestaurant(list1 []string, list2 []string) []string {
 	var res []string
-	repeatedMap := make(map[string]int)
 	strMap := make(map[string]int)
 	for i, str := range list1 {
 		strMap[str] = i
 	}
+
 	min := math.MaxInt64
 	for i, str := range list2 {
-		value, ok := strMap[str]
-		if ok {
-			temp := i + value
-			repeatedMap[str] = temp
-			if temp < min {
-				min = temp
+		if value, ok := strMap[str]; ok {
+			if i+value < min {
+				min = i + value
+				res = []string{str}
+			} else if i+value == min {
+				res = append(res, str)
 			}
 		}
-	}
 
-	for key, value := range repeatedMap {
-		if value == min {
-			res = append(res, key)
-		}
 	}
 	return res
 }
