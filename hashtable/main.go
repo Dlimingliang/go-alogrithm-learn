@@ -31,7 +31,28 @@ func main() {
 	//fmt.Println(isIsomorphic("foo", "bar"))
 	//fmt.Println(findRestaurant([]string{"Shogun", "Tapioca Express", "Burger King", "KFC"},
 	//	[]string{"KFC", "Shogun", "Burger King"}))
-	fmt.Println(firstUniqChar("leetcode"))
+	//fmt.Println(firstUniqChar("leetcode"))
+	fmt.Println(intersect([]int{9, 4, 9, 8, 4}, []int{4, 9, 5}))
+}
+
+func intersect(nums1 []int, nums2 []int) []int {
+	res := make([]int, 0)
+	numMap := make(map[int]int)
+	for _, num := range nums1 {
+		if count, ok := numMap[num]; ok {
+			numMap[num] = 1 + count
+		} else {
+			numMap[num] = 1
+		}
+	}
+
+	for _, num := range nums2 {
+		if count, ok := numMap[num]; ok && count > 0 {
+			res = append(res, num)
+			numMap[num] = count - 1
+		}
+	}
+	return res
 }
 
 func firstUniqChar(s string) int {
