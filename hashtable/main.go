@@ -29,8 +29,33 @@ func main() {
 	//fmt.Println(isHappy(2))
 	//fmt.Println(twoSum([]int{3, 2, 4}, 6))
 	//fmt.Println(isIsomorphic("foo", "bar"))
-	fmt.Println(findRestaurant([]string{"Shogun", "Tapioca Express", "Burger King", "KFC"},
-		[]string{"KFC", "Shogun", "Burger King"}))
+	//fmt.Println(findRestaurant([]string{"Shogun", "Tapioca Express", "Burger King", "KFC"},
+	//	[]string{"KFC", "Shogun", "Burger King"}))
+	fmt.Println(firstUniqChar("leetcode"))
+}
+
+func firstUniqChar(s string) int {
+	n := len(s)
+	byteMap := make(map[byte]int, n)
+	for i := 0; i < n; i++ {
+		if _, ok := byteMap[s[i]]; ok {
+			byteMap[s[i]] = n + 1
+		} else {
+			byteMap[s[i]] = i
+		}
+	}
+
+	min := n
+	for _, v := range byteMap {
+		if v < min {
+			min = v
+		}
+	}
+
+	if min < n {
+		return min
+	}
+	return -1
 }
 
 func findRestaurant(list1 []string, list2 []string) []string {
