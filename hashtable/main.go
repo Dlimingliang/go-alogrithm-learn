@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
+	"strings"
 )
 
 func main() {
@@ -32,7 +34,43 @@ func main() {
 	//fmt.Println(findRestaurant([]string{"Shogun", "Tapioca Express", "Burger King", "KFC"},
 	//	[]string{"KFC", "Shogun", "Burger King"}))
 	//fmt.Println(firstUniqChar("leetcode"))
-	fmt.Println(intersect([]int{9, 4, 9, 8, 4}, []int{4, 9, 5}))
+	//fmt.Println(intersect([]int{9, 4, 9, 8, 4}, []int{4, 9, 5}))
+	//fmt.Println(containsNearbyDuplicate([]int{1, 0, 1, 1}, 1))
+	fmt.Println(groupAnagrams([]string{""}))
+}
+
+func groupAnagrams(strs []string) [][]string {
+	strMap := make(map[string][]string)
+	for _, str := range strs {
+		key := getSortKey(str)
+		strMap[key] = append(strMap[key], str)
+	}
+
+	res := make([][]string, 0)
+	for _, value := range strMap {
+		res = append(res, value)
+	}
+	return res
+}
+
+func getSortKey(str string) string {
+	split := strings.Split(str, "")
+	sort.Strings(split)
+	return strings.Join(split, "")
+}
+
+func containsNearbyDuplicate(nums []int, k int) bool {
+	numMap := make(map[int]int, len(nums))
+	for i, num := range nums {
+		if index, ok := numMap[num]; ok {
+			temp := i - index
+			if temp <= k {
+				return true
+			}
+		}
+		numMap[num] = i
+	}
+	return false
 }
 
 func intersect(nums1 []int, nums2 []int) []int {
