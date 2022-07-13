@@ -36,7 +36,85 @@ func main() {
 	//fmt.Println(firstUniqChar("leetcode"))
 	//fmt.Println(intersect([]int{9, 4, 9, 8, 4}, []int{4, 9, 5}))
 	//fmt.Println(containsNearbyDuplicate([]int{1, 0, 1, 1}, 1))
-	fmt.Println(groupAnagrams([]string{""}))
+	//fmt.Println(groupAnagrams([]string{""}))
+	fmt.Println(isValidSudoku([][]byte{{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+		{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+		{'.', '.', '.', '.', '8', '.', '.', '7', '9'}}))
+}
+
+func isValidSudoku(board [][]byte) bool {
+	//n := len(board)
+	//m := len(board[0])
+	//rowSlice := make([]map[byte]bool, 9)
+	//cloumnSlice := make([]map[byte]bool, 9)
+	//Slice := make([]map[byte]bool, 9)
+	//for y := 0; y < n; y++ {
+	//	for x := 0; x < m; x++ {
+	//		temp := board[y][x]
+	//		if temp != '.' {
+	//			if rowSlice[y][temp] {
+	//				return false
+	//			} else {
+	//				if rowSlice[y] == nil {
+	//					xx := make(map[byte]bool, 1)
+	//					xx[temp] = true
+	//					rowSlice[y] = xx
+	//				} else {
+	//					rowSlice[y][temp] = true
+	//				}
+	//			}
+	//			if cloumnSlice[x][temp] {
+	//				return false
+	//			} else {
+	//				if cloumnSlice[x] == nil {
+	//					xx := make(map[byte]bool, 1)
+	//					xx[temp] = true
+	//					cloumnSlice[x] = xx
+	//				} else {
+	//					cloumnSlice[x][temp] = true
+	//				}
+	//			}
+	//			index := (y/3)*3 + (x / 3)
+	//			if Slice[index][temp] {
+	//				return false
+	//			} else {
+	//				if Slice[index] == nil {
+	//					xx := make(map[byte]bool, 1)
+	//					xx[temp] = true
+	//					Slice[index] = xx
+	//				} else {
+	//					Slice[index][temp] = true
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
+	//return true
+
+	//一次遍历
+	var rows, columns [9][9]int
+	var subboxes [3][3][9]int
+	for i, row := range board {
+		for j, c := range row {
+			if c == '.' {
+				continue
+			}
+			index := c - '1'
+			rows[i][index]++
+			columns[j][index]++
+			subboxes[i/3][j/3][index]++
+			if rows[i][index] > 1 || columns[j][index] > 1 || subboxes[i/3][j/3][index] > 1 {
+				return false
+			}
+		}
+	}
+	return true
 }
 
 func groupAnagrams(strs []string) [][]string {
