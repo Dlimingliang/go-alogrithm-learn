@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
 func main() {
 	//mySet := hashset.Constructor()
 	//mySet.Add(1)
@@ -37,15 +43,50 @@ func main() {
 	//fmt.Println(intersect([]int{9, 4, 9, 8, 4}, []int{4, 9, 5}))
 	//fmt.Println(containsNearbyDuplicate([]int{1, 0, 1, 1}, 1))
 	//fmt.Println(groupAnagrams([]string{""}))
-	fmt.Println(isValidSudoku([][]byte{{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
-		{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-		{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-		{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-		{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
-		{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
-		{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-		{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-		{'.', '.', '.', '.', '8', '.', '.', '7', '9'}}))
+	//fmt.Println(isValidSudoku([][]byte{{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+	//	{'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+	//	{'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+	//	{'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+	//	{'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+	//	{'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+	//	{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+	//	{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+	//	{'.', '.', '.', '.', '8', '.', '.', '7', '9'}}))
+	threeLeftOne := TreeNode{Val: 4}
+	twoLeftOne := TreeNode{Val: 2, Left: &threeLeftOne}
+	fourRightOne := TreeNode{Val: 4}
+	threeRightOne := TreeNode{Val: 2, Left: &fourRightOne}
+	threeRightTwo := TreeNode{Val: 4}
+	twoRightOne := TreeNode{Val: 3, Left: &threeRightOne, Right: &threeRightTwo}
+	root := TreeNode{Val: 1, Left: &twoLeftOne, Right: &twoRightOne}
+	fmt.Println(findDuplicateSubtrees(&root))
+}
+
+func findDuplicateSubtrees(root *TreeNode) []*TreeNode {
+	var res []*TreeNode
+	strMap := make(map[string]int)
+	subTreeRecursion(root, &strMap, &res)
+	return res
+}
+
+func subTreeRecursion(node *TreeNode, mapPoint *map[string]int, res *[]*TreeNode) string {
+	if node == nil {
+		return "#"
+	}
+
+	str := fmt.Sprintf("%d,%s,%s", node.Val, subTreeRecursion(node.Left, mapPoint, res), subTreeRecursion(node.Right, mapPoint, res))
+	strMap := *mapPoint
+
+	if count, ok := strMap[str]; ok {
+		strMap[str] = count + 1
+		if strMap[str] == 2 {
+			*res = append(*res, node)
+		}
+	} else {
+		strMap[str] = 1
+	}
+
+	return str
 }
 
 func isValidSudoku(board [][]byte) bool {
