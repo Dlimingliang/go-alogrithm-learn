@@ -65,30 +65,52 @@ func main() {
 }
 
 func lengthOfLongestSubstring(s string) int {
-	res := 0
+	//res := 0
+	//subStrMap := map[byte]int{}
+	//slice := make([]byte, 0)
+	//for i := 0; i < len(s); i++ {
+	//	if index, ok := subStrMap[s[i]]; ok {
+	//		if len(slice) > res {
+	//			res = len(slice)
+	//		}
+	//		slice = slice[index+1:]
+	//		slice = append(slice, s[i])
+	//		tempMap := map[byte]int{}
+	//		for j := 0; j < len(slice); j++ {
+	//			tempMap[slice[j]] = j
+	//		}
+	//		subStrMap = tempMap
+	//	} else {
+	//		subStrMap[s[i]] = len(slice)
+	//		slice = append(slice, s[i])
+	//	}
+	//}
+	//if len(slice) > res {
+	//	res = len(slice)
+	//}
+	//return res
+
 	subStrMap := map[byte]int{}
-	slice := make([]byte, 0)
-	for i := 0; i < len(s); i++ {
-		if index, ok := subStrMap[s[i]]; ok {
-			if len(slice) > res {
-				res = len(slice)
-			}
-			slice = slice[index+1:]
-			slice = append(slice, s[i])
-			tempMap := map[byte]int{}
-			for j := 0; j < len(slice); j++ {
-				tempMap[slice[j]] = j
-			}
-			subStrMap = tempMap
-		} else {
-			subStrMap[s[i]] = len(slice)
-			slice = append(slice, s[i])
+	n := len(s)
+	rk, ans := -1, 0
+	for i := 0; i < n; i++ {
+		if i != 0 {
+			delete(subStrMap, s[i-1])
 		}
+		for rk+1 < n && subStrMap[s[rk+1]] == 0 {
+			subStrMap[s[rk+1]]++
+			rk++
+		}
+		ans = max(ans, rk-i+1)
 	}
-	if len(slice) > res {
-		res = len(slice)
+	return ans
+}
+
+func max(x, y int) int {
+	if x < y {
+		return y
 	}
-	return res
+	return x
 }
 
 func numJewelsInStones(jewels string, stones string) int {
