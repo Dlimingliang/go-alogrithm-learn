@@ -52,14 +52,57 @@ func main() {
 	//	{'.', '6', '.', '.', '.', '.', '2', '8', '.'},
 	//	{'.', '.', '.', '4', '1', '9', '.', '.', '5'},
 	//	{'.', '.', '.', '.', '8', '.', '.', '7', '9'}}))
-	threeLeftOne := TreeNode{Val: 4}
-	twoLeftOne := TreeNode{Val: 2, Left: &threeLeftOne}
-	fourRightOne := TreeNode{Val: 4}
-	threeRightOne := TreeNode{Val: 2, Left: &fourRightOne}
-	threeRightTwo := TreeNode{Val: 4}
-	twoRightOne := TreeNode{Val: 3, Left: &threeRightOne, Right: &threeRightTwo}
-	root := TreeNode{Val: 1, Left: &twoLeftOne, Right: &twoRightOne}
-	fmt.Println(findDuplicateSubtrees(&root))
+	//threeLeftOne := TreeNode{Val: 4}
+	//twoLeftOne := TreeNode{Val: 2, Left: &threeLeftOne}
+	//fourRightOne := TreeNode{Val: 4}
+	//threeRightOne := TreeNode{Val: 2, Left: &fourRightOne}
+	//threeRightTwo := TreeNode{Val: 4}
+	//twoRightOne := TreeNode{Val: 3, Left: &threeRightOne, Right: &threeRightTwo}
+	//root := TreeNode{Val: 1, Left: &twoLeftOne, Right: &twoRightOne}
+	//fmt.Println(findDuplicateSubtrees(&root))
+	//fmt.Println(numJewelsInStones("z", "ZZ"))
+	fmt.Println(lengthOfLongestSubstring("asljlj"))
+}
+
+func lengthOfLongestSubstring(s string) int {
+	res := 0
+	subStrMap := map[byte]int{}
+	slice := make([]byte, 0)
+	for i := 0; i < len(s); i++ {
+		if index, ok := subStrMap[s[i]]; ok {
+			if len(slice) > res {
+				res = len(slice)
+			}
+			slice = slice[index+1:]
+			slice = append(slice, s[i])
+			tempMap := map[byte]int{}
+			for j := 0; j < len(slice); j++ {
+				tempMap[slice[j]] = j
+			}
+			subStrMap = tempMap
+		} else {
+			subStrMap[s[i]] = len(slice)
+			slice = append(slice, s[i])
+		}
+	}
+	if len(slice) > res {
+		res = len(slice)
+	}
+	return res
+}
+
+func numJewelsInStones(jewels string, stones string) int {
+	jewelsMap := make(map[byte]bool, len(jewels))
+	for i := 0; i < len(jewels); i++ {
+		jewelsMap[jewels[i]] = true
+	}
+	res := 0
+	for i := 0; i < len(stones); i++ {
+		if jewelsMap[stones[i]] {
+			res++
+		}
+	}
+	return res
 }
 
 func findDuplicateSubtrees(root *TreeNode) []*TreeNode {
