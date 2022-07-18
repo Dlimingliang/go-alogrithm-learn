@@ -61,7 +61,25 @@ func main() {
 	//root := TreeNode{Val: 1, Left: &twoLeftOne, Right: &twoRightOne}
 	//fmt.Println(findDuplicateSubtrees(&root))
 	//fmt.Println(numJewelsInStones("z", "ZZ"))
-	fmt.Println(lengthOfLongestSubstring("asljlj"))
+	//fmt.Println(lengthOfLongestSubstring("asljlj"))
+	fmt.Println(fourSumCount([]int{-1, 1, 1, 1, -1}, []int{0, -1, -1, 0, 1}, []int{-1, -1, 1, -1, -1}, []int{0, 1, 0, -1, -1}))
+}
+
+func fourSumCount(nums1 []int, nums2 []int, nums3 []int, nums4 []int) int {
+	var res int
+	numMap := map[int]int{}
+	for _, v := range nums1 {
+		for _, w := range nums2 {
+			numMap[v+w]++
+		}
+	}
+
+	for _, v := range nums3 {
+		for _, w := range nums4 {
+			res += numMap[-v-w]
+		}
+	}
+	return res
 }
 
 func lengthOfLongestSubstring(s string) int {
