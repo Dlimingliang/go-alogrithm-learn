@@ -78,8 +78,8 @@ func (this *LRUCache) Get(key int) int {
 
 func (this *LRUCache) Put(key int, value int) {
 	if _, ok := this.Cache[key]; ok {
-		node := this.DeleteNode(key)
-		this.AddRecent(node.Key, node.Value)
+		this.DeleteNode(key)
+		this.AddRecent(key, value)
 	} else {
 		//不存在
 		if this.List.Capacity == this.Capacity {
@@ -102,11 +102,10 @@ func (this *LRUCache) AddRecent(key, value int) {
 	this.Cache[key] = node
 }
 
-func (this *LRUCache) DeleteNode(key int) *Node {
+func (this *LRUCache) DeleteNode(key int) {
 	node := this.Cache[key]
 	this.List.DeleteNode(node)
 	delete(this.Cache, key)
-	return node
 }
 
 func (this *LRUCache) DeleteFirst() {
