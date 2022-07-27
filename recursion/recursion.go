@@ -1,19 +1,46 @@
 package main
 
-func main() {
-	//reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
-	node4 := ListNode{Val: 4}
-	node3 := ListNode{Val: 3, Next: &node4}
-	node2 := ListNode{Val: 2, Next: &node3}
-	node1 := ListNode{Val: 1, Next: &node2}
-	//head := swapPairs(&node4)
-	//fmt.Println(head)
-	reverseList(&node1)
-}
+import "fmt"
 
 type ListNode struct {
 	Val  int
 	Next *ListNode
+}
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+func main() {
+	//reverseString([]byte{'h', 'e', 'l', 'l', 'o'})
+	//node4 := ListNode{Val: 4}
+	//node3 := ListNode{Val: 3, Next: &node4}
+	//node2 := ListNode{Val: 2, Next: &node3}
+	//node1 := ListNode{Val: 1, Next: &node2}
+	////head := swapPairs(&node4)
+	////fmt.Println(head)
+	//reverseList(&node1)
+	one := TreeNode{Val: 1}
+	three := TreeNode{Val: 3}
+	two := TreeNode{Val: 2, Left: &one, Right: &three}
+	seven := TreeNode{Val: 7}
+	root := TreeNode{Val: 4, Left: &two, Right: &seven}
+	node := searchBST(&root, 5)
+	fmt.Println(node)
+}
+
+func searchBST(root *TreeNode, val int) *TreeNode {
+	var res *TreeNode
+	if root == nil || root.Val == val {
+		res = root
+	} else if root.Val < val {
+		res = searchBST(root.Right, val)
+	} else {
+		res = searchBST(root.Left, val)
+	}
+	return res
 }
 
 func reverseList(head *ListNode) *ListNode {
