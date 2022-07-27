@@ -29,23 +29,37 @@ func main() {
 	//root := TreeNode{Val: 4, Left: &two, Right: &seven}
 	//node := searchBST(&root, 5)
 	//fmt.Println(node)
-	fmt.Println(getRow(2))
+	fmt.Println(getRow(3))
 }
 
 func getRow(rowIndex int) []int {
-	var res, pre []int
-	for i := 0; i <= rowIndex; i++ {
-		if i == 0 {
-			res = []int{1}
-		} else {
-			res = make([]int, i+1)
-			res[0] = 1
-			res[i] = 1
-			for j := 1; j < i; j++ {
-				res[j] = pre[j] + pre[j-1]
-			}
-		}
-		pre = res
+	//var res, pre []int
+	//for i := 0; i <= rowIndex; i++ {
+	//	if i == 0 {
+	//		res = []int{1}
+	//	} else {
+	//		res = make([]int, i+1)
+	//		res[0] = 1
+	//		res[i] = 1
+	//		for j := 1; j < i; j++ {
+	//			res[j] = pre[j] + pre[j-1]
+	//		}
+	//	}
+	//	pre = res
+	//}
+	//return res
+	if rowIndex == 0 {
+		return []int{1}
+	}
+	if rowIndex == 1 {
+		return []int{1, 1}
+	}
+	pre := getRow(rowIndex - 1)
+	res := make([]int, rowIndex+1)
+	res[0] = 1
+	res[rowIndex] = 1
+	for i := 1; i < rowIndex; i++ {
+		res[i] = pre[i] + pre[i-1]
 	}
 	return res
 }
