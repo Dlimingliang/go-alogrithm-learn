@@ -22,13 +22,32 @@ func main() {
 	////head := swapPairs(&node4)
 	////fmt.Println(head)
 	//reverseList(&node1)
-	one := TreeNode{Val: 1}
-	three := TreeNode{Val: 3}
-	two := TreeNode{Val: 2, Left: &one, Right: &three}
-	seven := TreeNode{Val: 7}
-	root := TreeNode{Val: 4, Left: &two, Right: &seven}
-	node := searchBST(&root, 5)
-	fmt.Println(node)
+	//one := TreeNode{Val: 1}
+	//three := TreeNode{Val: 3}
+	//two := TreeNode{Val: 2, Left: &one, Right: &three}
+	//seven := TreeNode{Val: 7}
+	//root := TreeNode{Val: 4, Left: &two, Right: &seven}
+	//node := searchBST(&root, 5)
+	//fmt.Println(node)
+	fmt.Println(getRow(2))
+}
+
+func getRow(rowIndex int) []int {
+	var res, pre []int
+	for i := 0; i <= rowIndex; i++ {
+		if i == 0 {
+			res = []int{1}
+		} else {
+			res = make([]int, i+1)
+			res[0] = 1
+			res[i] = 1
+			for j := 1; j < i; j++ {
+				res[j] = pre[j] + pre[j-1]
+			}
+		}
+		pre = res
+	}
+	return res
 }
 
 func searchBST(root *TreeNode, val int) *TreeNode {
