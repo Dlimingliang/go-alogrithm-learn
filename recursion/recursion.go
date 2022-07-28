@@ -29,7 +29,34 @@ func main() {
 	//root := TreeNode{Val: 4, Left: &two, Right: &seven}
 	//node := searchBST(&root, 5)
 	//fmt.Println(node)
-	fmt.Println(getRow(3))
+	//fmt.Println(getRow(3))
+	fmt.Println(fib(10))
+}
+
+var fibMap = make(map[int]int)
+
+func fib(n int) int {
+	if value, ok := fibMap[n]; ok {
+		return value
+	}
+	if n < 2 {
+		return n
+	}
+	value := fib(n-1) + fib(n-2)
+	fibMap[n] = value
+	return value
+
+	//迭代法
+	//if n < 2 {
+	//	return n
+	//}
+	//p, q, r := 0, 0, 1
+	//for i := 2; i <= n; i++ {
+	//	p = q
+	//	q = r
+	//	r = p + q
+	//}
+	//return r
 }
 
 func getRow(rowIndex int) []int {
