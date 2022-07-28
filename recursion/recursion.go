@@ -30,7 +30,26 @@ func main() {
 	//node := searchBST(&root, 5)
 	//fmt.Println(node)
 	//fmt.Println(getRow(3))
-	fmt.Println(fib(10))
+	//fmt.Println(fib(3))
+	fmt.Println(climbStairs(44))
+}
+
+func climbStairs(n int) int {
+	//if n < 2 {
+	//	return 1
+	//}
+	//return climbStairs(n-2) + climbStairs(n-1)
+
+	if n < 2 {
+		return 1
+	}
+	p, q, r := 1, 1, 1
+	for i := 2; i <= n; i++ {
+		p = q
+		q = r
+		r = p + q
+	}
+	return r
 }
 
 var fibMap = make(map[int]int)
