@@ -31,7 +31,26 @@ func main() {
 	//fmt.Println(node)
 	//fmt.Println(getRow(3))
 	//fmt.Println(fib(3))
-	fmt.Println(climbStairs(44))
+	//fmt.Println(climbStairs(44))
+	node15 := TreeNode{Val: 15}
+	node7 := TreeNode{Val: 7}
+	node20 := TreeNode{Val: 20, Left: &node15, Right: &node7}
+	node9 := TreeNode{Val: 9}
+	root := TreeNode{Val: 3, Left: &node9, Right: &node20}
+	fmt.Println(maxDepth(&root))
+}
+
+func maxDepth(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+	left := maxDepth(root.Left) + 1
+	right := maxDepth(root.Right) + 1
+	if left > right {
+		return left
+	} else {
+		return right
+	}
 }
 
 func climbStairs(n int) int {
